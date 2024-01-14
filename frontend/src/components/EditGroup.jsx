@@ -56,56 +56,57 @@ export default function EditGroup({ setContent, convo }) {
 
     return (
         <>
-            <div className="title">
+            <div className="flex items-center border-b border-black pb-2 mb-2 md:min-w-[400px]">
                 <button onClick={() => {
                     add ? setAdd(false) : setContent('chat');
-                }}>Back</button>
-                {add ? <h1>Add Members</h1> : <h1>Edit Group</h1>}
+                }}
+                    className="button-normal"
+                >Back</button>
+                <span className="title mx-4 w-full text-center">{add ? 'Add Members' : 'Edit group'}</span>
             </div>
-            <div style={{ overflow: 'scroll' }}>
+            <div className="overflow-scroll h-full flex flex-col p-0.5">
                 {add ?
                     <>
-                        <br />
-                        <div id="groupUsers">
+                        <div className="mb-1 flex flex-wrap">
                             {addUsers.map((el) => <span key={el} onClick={() => {
                                 const users = addUsers.filter((user) => user != el);
                                 setAddUsers(users);
-                            }}>{el}</span>)}
-                        </div> <br />
+                            }} className="border border-black rounded-sm hover:bg-gray-300 cursor-pointer px-1 py-0.5 m-0.5"
+                            >{el}</span>)}
+                        </div>
                         <Search onClick={(user) => {
                             if (!addUsers.includes(user.username))
                                 setAddUsers([...addUsers, user.username]);
                         }} />
-                        <br />
                     </> :
                     <>
-                        <br />
                         <p>Edit Group Name:</p>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} style={{ width: 100 + '%' }} /><br /><br />
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-input mb-2" />
                         <p>Remove Members:</p>
-                        <div className="users">
-                            {groupUsers.map(el => <div key={el}>
-                                <input type="checkbox" id={`check-${el}`} onChange={(e) => {
-                                    if (e.target.checked)
-                                        setDelUsers(delUsers.concat(el))
-                                    else
-                                        setDelUsers(delUsers.filter((user) => user != el));
-                                }} />
-                                <label htmlFor={`check-${el}`} className="convo del" >
-                                    <p>{el}</p>
+                        <div className="h-full overflow-scroll mb-2">
+                            {groupUsers.map(el =>
+                                <label key={el}
+                                    className="block border-b py-1 hover:bg-gray-300 cursor-pointer transition-all duration-100 ease-in-out"
+                                >
+                                    <input type="checkbox" onChange={(e) => {
+                                        if (e.target.checked)
+                                            setDelUsers(delUsers.concat(el))
+                                        else
+                                            setDelUsers(delUsers.filter((user) => user != el));
+                                    }}
+                                        className='mr-2' />
+                                    <span>{el}</span>
                                 </label>
-                            </div>)}
-                        </div><br />
-                        <div className="tab">
-                            <button onClick={() => setAdd(true)}>Add Members</button>
-                        </div><br />
+                            )}
+                        </div>
+                        <button onClick={() => setAdd(true)} className="block button-normal w-full mb-2">Add Members</button>
                     </>}
-                <div className="tab">
+                <div className="flex">
                     {!add && <>
-                        <button style={{ marginRight: 5 + 'px' }} onClick={editGroup}>Save</button>
-                        <button onClick={delGroup}>Delete Group</button>
+                        <button onClick={editGroup} className="button-normal w-full mr-1">Save</button>
+                        <button onClick={delGroup} className="button-normal w-full ml-1">Delete Group</button>
                     </>}
-                </div><br />
+                </div>
                 {error && <div className="error">{error}</div>}
             </div>
         </>

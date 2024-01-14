@@ -89,28 +89,30 @@ export default function Chat({ convo, name, setContent }) {
 
     return (
         <>
-            <div id="chat" className="title">
-                <button onClick={() => setContent('convos')}>Back</button>
-                <h1>{name}</h1>
-                {convo.isGroupChat ? <>
-                    <button style={{ marginRight: 10 + 'px' }} onClick={() => setContent('groupInfo')}>View</button>
-                    {username == convo.admin && <button onClick={() => setContent('editGroup')}>Edit</button>}
-                </> :
-                    <button onClick={delConvo}>Delete</button>}
+            <div className="flex justify-between items-center pb-2 border-b border-black">
+                <button onClick={() => setContent('convos')} className="button-normal">Back</button>
+                <span className="title mx-4">{name}</span>
+                <span>
+                    {convo.isGroupChat ? <>
+                        <button onClick={() => setContent('groupInfo')} className="button-normal">View</button>
+                        {username == convo.admin && <button onClick={() => setContent('editGroup')} className="button-normal ml-2">Edit</button>}
+                    </> :
+                        <button onClick={delConvo} className="button-normal">Delete</button>}
+                </span>
             </div>
 
-            <div id="messages">
+            <div className="h-full min-h-72 md:min-w-[500px] overflow-scroll border-b border-black mb-4">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>
             </div>
 
-            <div id="send">
-                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} />
-                <button onClick={sendMessage} disabled={message == '' || loading}>Send</button>
+            <div className="flex items-center">
+                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8" />
+                <button onClick={sendMessage} disabled={message == '' || loading} className="button-normal ml-2">Send</button>
             </div>
 
-            {error && <div className="error" style={{ marginTop: 10 + 'px' }}>{error}</div>}
+            {error && <div className="error mt-2">{error}</div>}
         </>
     );
 }

@@ -7,6 +7,8 @@ const sendMessage = async (req, res) => {
         const conv = await Conversation.findById(convo);
         if (!conv)
             throw new Error('Conversation doesn\'t exist');
+        if (!conv.users.includes(user))
+            throw new Error('You are not a part of this conversation');
         const message = await Message.create({ conversation: convo, author: user, body: msg });
         await Conversation.findByIdAndUpdate(convo, { lastMessage: message._id });
         return res.json(message);

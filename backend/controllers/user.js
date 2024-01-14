@@ -26,7 +26,7 @@ const signup = async (req, res) => {
         if (!username.match(/^[a-z\d_]{3,16}$/))
             throw new Error('Username must be between 3 and 16 characters long and should only contain lowercase letters, numbers, and underscores');
         if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,16}$/))
-            throw new Error('Password must be between 8 and 16 characters long and should contain atleast one lowercase character, one uppercase character, one digit, and one special character( !@#$%^&*() )');
+            throw new Error('Password must be between 8 and 16 characters long and should contain atleast one lowercase character, one uppercase character, one digit, and one special character ( !@#$%^&*() )');
         const user = await User.signup(username.trim(), password.trim());
         const token = createToken(username);
         res.status(200).json({ token });

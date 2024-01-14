@@ -17,20 +17,20 @@ export default function Search({ onClick }) {
     };
 
     return (
-        <div id="search">
-            <div className="searchbar">
-                <input type="text" onChange={(e) => { setQuery(e.target.value); }} placeholder="Enter username" />
-                <button onClick={search}>Search</button>
+        <>
+            <div className="flex">
+                <input type="text" onChange={(e) => { setQuery(e.target.value); }} placeholder="Enter username" className="text-input" />
+                <button onClick={search} className="button-normal ml-2">Search</button>
             </div>
-            <div className="convos">
+            <div className="h-full overflow-scroll my-2">
                 {
                     result.length == 0 ?
-                        <p style={{ padding: 10 + 'px' }}>No Results</p> :
-                        <>{result.map(el => <div key={el._id} className="convo" onClick={() => { onClick(el); }}>
+                        <p>No Results</p> :
+                        <>{result.map(el => <div key={el._id} className="border-b py-1 hover:bg-gray-300 cursor-pointer transition-all duration-100 ease-in-out" onClick={() => { onClick(el); }}>
                             {el.username}<br />
                         </div>)}</>
                 }
             </div>
-        </div>
+        </>
     );
 }

@@ -50,15 +50,15 @@ export default function Home() {
 
     return (
         <>
-            <div id="home" className="card">
+            <div id="home" className="border border-black p-4 rounded-md shadow-lg flex flex-col min-w-72 min-h-72 max-h-[calc(100%-10px)]">
                 {
                     {
                         'convos': <>
-                            <div className="title">
-                                <h1>{username}</h1>
-                                <span>
-                                    <button style={{ margin: 0 + 'px ' + 10 + 'px' }} onClick={() => setContent('add')}>+</button>
-                                    <button onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
+                            <div className="flex justify-between items-center border-b border-black pb-2">
+                                <span className="title">{username}</span>
+                                <span className="mx-2">
+                                    <button className="button-normal mr-2" onClick={() => setContent('add')}>+</button>
+                                    <button className="button-normal" onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
                                 </span>
                             </div>
 

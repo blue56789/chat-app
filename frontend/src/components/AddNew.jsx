@@ -22,22 +22,20 @@ export default function AddNew({ setContent }) {
 
     return (
         <>
-            <div style={{ marginBottom: 10 + 'px' }}>
-                <button onClick={() => setContent('convos')} style={{ marginRight: 5 + 'px' }}>Back</button>
+            <div className="mb-2">
+                <button onClick={() => setContent('convos')} className="button-normal">Back</button>
             </div>
-            <div className="tab">
+            <div className="flex mb-2">
                 <button onClick={() => {
                     setAdd(true);
                 }}
-                    className={add ? '' : 'not-selected'}
-                    style={{ marginRight: 5 + 'px' }}>
+                    className={'border px-2 py-1 rounded-sm w-full mr-1 ' + (add ? 'border-black' : 'border-gray-500 text-gray-500')}>
                     New Contact
                 </button>
                 <button onClick={() => {
                     setAdd(false);
                 }}
-                    className={add ? 'not-selected' : ''}
-                    style={{ marginLeft: 5 + 'px' }} >
+                    className={'border px-2 py-1 rounded-sm w-full ml-1 ' + (add ? 'border-gray-500 text-gray-500' : 'border-black')}>
                     New Group
                 </button>
             </div>
@@ -46,15 +44,18 @@ export default function AddNew({ setContent }) {
                 {add ?
                     <Search onClick={addConvo} /> :
                     <>
-                        <label htmlFor="groupName">Enter Group Name:</label>
-                        <input id="groupName" type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} />
-                        <br />
+                        <p>Group Name:</p>
+                        <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-2" />
                         {groupUsers.length > 0 && <>
-                            <div id="groupUsers">
-                                {groupUsers.map((el) => <span key={el} onClick={() => {
-                                    const users = groupUsers.filter((user) => user != el);
-                                    setGroupUsers(users);
-                                }}>{el}</span>)}
+                            <div className="mb-1 flex flex-wrap">
+                                {groupUsers.map((el) =>
+                                    <div key={el} onClick={() => {
+                                        const users = groupUsers.filter((user) => user != el);
+                                        setGroupUsers(users);
+                                    }}
+                                        className="border border-black rounded-sm hover:bg-gray-300 cursor-pointer px-1 py-0.5 m-0.5">
+                                        {el}
+                                    </div>)}
                             </div> <br />
                         </>}
                         <p>Add Members:</p>
@@ -66,8 +67,8 @@ export default function AddNew({ setContent }) {
                 }
             </>
 
-            <div className="tab">
-                {!add && <button onClick={createGroup} style={{ marginLeft: 5 + 'px' }}>Create Group</button>}
+            <div className="mb-2">
+                {!add && <button onClick={createGroup} className="button-normal w-full">Create Group</button>}
             </div>
             {error && <div className="error">{error}</div>}
             {success && <div className="success">
