@@ -30,13 +30,13 @@ export default function AddNew({ setContent }) {
                 <button onClick={() => {
                     setAdd(true);
                 }}
-                    className={'border px-2 py-1 rounded-sm w-full mr-1 ' + (add ? 'border-black' : 'border-gray-500 text-gray-500')}>
+                    className={'w-full border rounded cursor-pointer hover:bg-gray-100 mr-1 ' + (add ? 'border-black' : 'border-gray-500 text-gray-500')}>
                     New Contact
                 </button>
                 <button onClick={() => {
                     setAdd(false);
                 }}
-                    className={'border px-2 py-1 rounded-sm w-full ml-1 ' + (add ? 'border-gray-500 text-gray-500' : 'border-black')}>
+                    className={'w-full border rounded cursor-pointer hover:bg-gray-100 ml-1 ' + (add ? 'border-gray-500 text-gray-500' : 'border-black')}>
                     New Group
                 </button>
             </div>

@@ -10,7 +10,7 @@ export default function GroupInfo({ setContent, convo }) {
                 <span className="title text-center mx-4">Members</span>
                 <div className="w-7"></div>
             </div>
-            <div className="h-full overflow-scroll">
+            <div className="h-full overflow-scroll no-scrollbar pb-2">
                 {convo.users.map((el) => <div key={el} className="border-b py-1">{el == username ? 'You' : el} {el == convo.admin && <span className="float-right">Admin</span>}</div>)}
             </div>
         </>

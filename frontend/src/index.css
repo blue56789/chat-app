@@ -1,21 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.text-input{
-    @apply border border-black rounded-sm px-1 w-full;
+@layer components{
+    .text-input{
+        @apply border border-black rounded px-1 w-full;
+    }
+    .error{
+        @apply border-2 border-red-600 bg-red-100 text-red-600 rounded-md px-2 py-1
+    }
+    .success{
+        @apply border-2 border-green-600 bg-green-100 text-green-600 rounded-md px-2 py-1
+    }
+    .button-normal{
+        @apply border-2 border-black hover:bg-black hover:text-white font-semibold cursor-pointer rounded px-1 py-0.5 disabled:cursor-default tracking-wide transition-all
+    }
+    .button-icon{
+        @apply cursor-pointer border-2 border-black hover:bg-black hover:text-white rounded w-8 h-8 disabled:cursor-default transition-all
+    }
+    .title{
+        @apply font-bold text-4xl
+    }
 }
-.error{
-    @apply border-2 border-red-600 bg-red-100 text-red-600 rounded-md px-2 py-1
-}
-.success{
-    @apply border-2 border-green-600 bg-green-100 text-green-600 rounded-md px-2 py-1
-}
-.button-normal{
-    @apply font-semibold cursor-pointer border border-black rounded-sm px-1 py-0.5 disabled:border-gray-500 disabled:text-gray-500 disabled:cursor-default hover:bg-gray-300
-}
-.button-icon{
-    @apply cursor-pointer border border-black rounded-sm w-7 h-7 disabled:border-gray-500 disabled:text-gray-500 disabled:cursor-default hover:bg-gray-300
-}
-.title{
-    @apply font-bold text-4xl
+@layer utilities{
+    .no-scrollbar::-webkit-scrollbar{
+        display: none;
+    }
+    .no-scrollbar{
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 }

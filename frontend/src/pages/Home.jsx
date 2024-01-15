@@ -51,7 +51,7 @@ export default function Home() {
 
     return (
         <>
-            <div id="home" className="border border-black p-4 rounded-md shadow-lg flex flex-col min-w-72 min-h-72 max-h-[calc(100%-10px)]">
+            <div className="border p-4 rounded shadow-2xl flex flex-col min-w-72 min-h-72 max-h-[calc(100%-10px)] bg-white">
                 {
                     {
                         'convos': <>

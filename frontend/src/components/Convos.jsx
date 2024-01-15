@@ -7,12 +7,12 @@ export default function Convos({ setChat, setName, setContent }) {
 
     return (
         <>
-            <div className="h-full overflow-scroll">
+            <div className="overflow-scroll p-2 no-scrollbar">
                 {convos.map(el => {
                     const name1 = el.isGroupChat ? el.name : (el.users[0] == username ? el.users[1] : el.users[0]);
                     return (
                         <div key={el._id}
-                            className="border-b py-1 hover:bg-gray-300 cursor-pointer transition-all duration-100 ease-in-out"
+                            className="border-b py-1 hover:shadow-md cursor-pointer transition-all"
                             onClick={() => {
                                 setChat(el);
                                 setName(name1);

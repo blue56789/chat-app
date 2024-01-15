@@ -96,13 +96,13 @@ export default function Chat({ convo, name, setContent }) {
                 <span>
                     {convo.isGroupChat ? <>
                         <button onClick={() => setContent('groupInfo')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-info" /></button>
-                        {username == convo.admin && <button onClick={() => setContent('editGroup')} className="button-icon ml-2"><FontAwesomeIcon icon="fa-solid fa-pen" /></button>}
+                        {username == convo.admin && <button onClick={() => setContent('editGroup')} className="button-icon ml-2 "><FontAwesomeIcon icon="fa-solid fa-pen" /></button>}
                     </> :
                         <button onClick={delConvo} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-trash" /></button>}
                 </span>
             </div>
 
-            <div className="h-full min-h-72 md:min-w-[500px] overflow-scroll border-b border-black mb-4">
+            <div className="h-full min-h-72 md:min-w-[500px] overflow-scroll border-b border-black mb-4 no-scrollbar">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>
@@ -110,7 +110,7 @@ export default function Chat({ convo, name, setContent }) {
 
             <div className="flex items-center justify-between">
                 <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8 mr-2" />
-                <button onClick={sendMessage} disabled={message == '' || loading} className="border border-black h-8 w-16 disabled:border-gray-500 disabled:text-gray-500 rounded-sm hover:bg-gray-300"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                <button onClick={sendMessage} disabled={message == '' || loading} className="button-normal w-16 h-8"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
             </div>
 
             {error && <div className="error mt-2">{error}</div>}

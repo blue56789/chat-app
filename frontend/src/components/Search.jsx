@@ -20,14 +20,14 @@ export default function Search({ onClick }) {
     return (
         <>
             <div className="flex">
-                <input type="text" onChange={(e) => { setQuery(e.target.value); }} placeholder="Enter username" className="text-input" />
-                <button onClick={search} className="button-normal ml-2"><FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /></button>
+                <input type="text" onChange={(e) => { setQuery(e.target.value); }} placeholder="Enter username" className="text-input mr-2" />
+                <button onClick={search} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /></button>
             </div>
-            <div className="h-full overflow-scroll my-2">
+            <div className="h-full overflow-scroll p-2 no-scrollbar">
                 {
                     result.length == 0 ?
                         <p>No Results</p> :
-                        <>{result.map(el => <div key={el._id} className="border-b py-1 hover:bg-gray-300 cursor-pointer transition-all duration-100 ease-in-out" onClick={() => { onClick(el); }}>
+                        <>{result.map(el => <div key={el._id} className="border-b py-1 hover:shadow-md cursor-pointer transition-all" onClick={() => { onClick(el); }}>
                             {el.username}<br />
                         </div>)}</>
                 }

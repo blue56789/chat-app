@@ -20,10 +20,10 @@ function Authentication({ method, setMethod }) {
         // }
     };
     return (
-        <div className="flex flex-col border border-black p-4 rounded-md shadow-lg w-72">
-            <h1 className="text-3xl font-bold text-center mb-2">{method}</h1>
+        <div className="flex flex-col border p-4 rounded-md shadow-2xl w-72 gap-4 bg-white">
+            <h1 className="title text-center">{method}</h1>
 
-            <div className="mb-4">
+            <div className="">
                 <p>Username:</p>
                 <input
                     type="text"
@@ -33,7 +33,7 @@ function Authentication({ method, setMethod }) {
                 />
             </div>
 
-            <div className="mb-4">
+            <div className="">
                 <p>Password:</p>
                 <input
                     type={pass}
@@ -44,14 +44,11 @@ function Authentication({ method, setMethod }) {
                 <button onClick={showPassword}
                     className="ml-[-25px]"
                 >
-                    {pass == 'password' ?
-                        <FontAwesomeIcon icon="fa-solid fa-eye" /> :
-                        <FontAwesomeIcon icon="fa-solid fa-eye-slash" />
-                    }
+                    <FontAwesomeIcon icon="fa-solid fa-eye" className={pass == 'password' ? 'text-gray-500' : 'text-blue-500'} />
                 </button>
             </div>
 
-            <div className="mb-4 flex justify-center">
+            <div className="flex justify-center">
                 <button
                     className="button-normal"
                     onClick={submit} disabled={isLoading}>Submit</button>

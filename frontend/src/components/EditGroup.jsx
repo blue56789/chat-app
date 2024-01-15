@@ -73,7 +73,7 @@ export default function EditGroup({ setContent, convo }) {
                             {addUsers.map((el) => <span key={el} onClick={() => {
                                 const users = addUsers.filter((user) => user != el);
                                 setAddUsers(users);
-                            }} className="border border-black rounded-sm hover:bg-gray-300 cursor-pointer px-1 py-0.5 m-0.5"
+                            }} className="border border-black rounded hover:bg-gray-300 cursor-pointer px-1 py-0.5 m-0.5"
                             >{el}</span>)}
                         </div>
                         <Search onClick={(user) => {
@@ -85,10 +85,10 @@ export default function EditGroup({ setContent, convo }) {
                         <p>Edit Group Name:</p>
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-input mb-2" />
                         <p>Remove Members:</p>
-                        <div className="h-full overflow-scroll mb-2">
+                        <div className="h-full overflow-scroll px-2 pb-4 no-scrollbar">
                             {groupUsers.map(el =>
                                 <label key={el}
-                                    className="block border-b py-1 hover:bg-gray-300 cursor-pointer transition-all duration-100 ease-in-out"
+                                    className="block border-b py-1 hover:shadow-md transition-all hover:cursor-pointer"
                                 >
                                     <input type="checkbox" onChange={(e) => {
                                         if (e.target.checked)
@@ -101,12 +101,12 @@ export default function EditGroup({ setContent, convo }) {
                                 </label>
                             )}
                         </div>
-                        <button onClick={() => setAdd(true)} className="block button-normal w-full mb-2">Add Members</button>
+                        <button onClick={() => setAdd(true)} className="block button-normal w-full mb-2 ">Add Members</button>
                     </>}
                 <div className="flex">
                     {!add && <>
-                        <button onClick={editGroup} className="button-normal w-full mr-1">Save</button>
-                        <button onClick={delGroup} className="button-normal w-full ml-1">Delete Group</button>
+                        <button onClick={editGroup} className="button-normal w-full mr-1 ">Save</button>
+                        <button onClick={delGroup} className="button-normal w-full ml-1 ">Delete Group</button>
                     </>}
                 </div>
                 {error && <div className="error">{error}</div>}
