@@ -3,6 +3,7 @@ import Search from "./Search";
 import useAuthContext from "../hooks/useAuthContext";
 import useConvoContext from "../hooks/useConvoContext";
 import socket from "../socket";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function EditGroup({ setContent, convo }) {
     const { token, username } = useAuthContext();
@@ -56,13 +57,14 @@ export default function EditGroup({ setContent, convo }) {
 
     return (
         <>
-            <div className="flex items-center border-b border-black pb-2 mb-2 md:min-w-[400px]">
+            <div className="flex items-center border-b border-black pb-2 mb-2 md:min-w-[500px] justify-between">
                 <button onClick={() => {
                     add ? setAdd(false) : setContent('chat');
                 }}
-                    className="button-normal"
-                >Back</button>
-                <span className="title mx-4 w-full text-center">{add ? 'Add Members' : 'Edit group'}</span>
+                    className="button-icon"
+                ><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
+                <span className="title  text-center mx-4">{add ? 'Add Members' : 'Edit group'}</span>
+                <div className="w-7"></div>
             </div>
             <div className="overflow-scroll h-full flex flex-col p-0.5">
                 {add ?

@@ -11,7 +11,10 @@
     @apply border-2 border-green-600 bg-green-100 text-green-600 rounded-md px-2 py-1
 }
 .button-normal{
-    @apply cursor-pointer border border-black rounded-sm px-1 py-0.5 disabled:border-gray-500 disabled:text-gray-500 disabled:cursor-default hover:bg-gray-300
+    @apply font-semibold cursor-pointer border border-black rounded-sm px-1 py-0.5 disabled:border-gray-500 disabled:text-gray-500 disabled:cursor-default hover:bg-gray-300
+}
+.button-icon{
+    @apply cursor-pointer border border-black rounded-sm w-7 h-7 disabled:border-gray-500 disabled:text-gray-500 disabled:cursor-default hover:bg-gray-300
 }
 .title{
     @apply font-bold text-4xl

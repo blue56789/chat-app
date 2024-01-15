@@ -3,6 +3,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import Message from "./Message";
 import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Chat({ convo, name, setContent }) {
     const [message, setMessage] = useState('');
@@ -90,14 +91,14 @@ export default function Chat({ convo, name, setContent }) {
     return (
         <>
             <div className="flex justify-between items-center pb-2 border-b border-black">
-                <button onClick={() => setContent('convos')} className="button-normal">Back</button>
+                <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title mx-4">{name}</span>
                 <span>
                     {convo.isGroupChat ? <>
-                        <button onClick={() => setContent('groupInfo')} className="button-normal">View</button>
-                        {username == convo.admin && <button onClick={() => setContent('editGroup')} className="button-normal ml-2">Edit</button>}
+                        <button onClick={() => setContent('groupInfo')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-info" /></button>
+                        {username == convo.admin && <button onClick={() => setContent('editGroup')} className="button-icon ml-2"><FontAwesomeIcon icon="fa-solid fa-pen" /></button>}
                     </> :
-                        <button onClick={delConvo} className="button-normal">Delete</button>}
+                        <button onClick={delConvo} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-trash" /></button>}
                 </span>
             </div>
 
@@ -107,9 +108,9 @@ export default function Chat({ convo, name, setContent }) {
                 <div ref={msgRef}></div>
             </div>
 
-            <div className="flex items-center">
-                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8" />
-                <button onClick={sendMessage} disabled={message == '' || loading} className="button-normal ml-2">Send</button>
+            <div className="flex items-center justify-between">
+                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8 mr-2" />
+                <button onClick={sendMessage} disabled={message == '' || loading} className="border border-black h-8 w-16 disabled:border-gray-500 disabled:text-gray-500 rounded-sm hover:bg-gray-300"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
             </div>
 
             {error && <div className="error mt-2">{error}</div>}

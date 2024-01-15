@@ -7,6 +7,7 @@ import EditGroup from "../components/EditGroup";
 import GroupInfo from "../components/GroupInfo";
 import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Home() {
     const { username, dispatch } = useAuthContext();
@@ -57,8 +58,10 @@ export default function Home() {
                             <div className="flex justify-between items-center border-b border-black pb-2">
                                 <span className="title">{username}</span>
                                 <span className="mx-2">
-                                    <button className="button-normal mr-2" onClick={() => setContent('add')}>+</button>
-                                    <button className="button-normal" onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
+                                    <button className="button-icon" onClick={() => setContent('add')}>
+                                        <FontAwesomeIcon icon="fa-solid fa-plus" />
+                                    </button>
+                                    <button className="button-normal ml-2" onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
                                 </span>
                             </div>
 

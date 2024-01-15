@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAuthContext from "../hooks/useAuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Search({ onClick }) {
     const { token } = useAuthContext();
@@ -20,7 +21,7 @@ export default function Search({ onClick }) {
         <>
             <div className="flex">
                 <input type="text" onChange={(e) => { setQuery(e.target.value); }} placeholder="Enter username" className="text-input" />
-                <button onClick={search} className="button-normal ml-2">Search</button>
+                <button onClick={search} className="button-normal ml-2"><FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /></button>
             </div>
             <div className="h-full overflow-scroll my-2">
                 {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Search from "./Search";
 import useCreateCovo from "../hooks/useCreateConvo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AddNew({ setContent }) {
     const { createConvo, error } = useCreateCovo();
@@ -23,7 +24,7 @@ export default function AddNew({ setContent }) {
     return (
         <>
             <div className="mb-2">
-                <button onClick={() => setContent('convos')} className="button-normal">Back</button>
+                <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
             </div>
             <div className="flex mb-2">
                 <button onClick={() => {

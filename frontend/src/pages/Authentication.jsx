@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAuthenticate from "../hooks/useAuthenticate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Authentication({ method, setMethod }) {
     const [pass, setPass] = useState('password');
@@ -41,23 +42,28 @@ function Authentication({ method, setMethod }) {
                     className="text-input"
                 />
                 <button onClick={showPassword}
-                    className="ml-[-40px]"
-                >{pass == 'password' ? 'Show' : 'Hide'}</button>
+                    className="ml-[-25px]"
+                >
+                    {pass == 'password' ?
+                        <FontAwesomeIcon icon="fa-solid fa-eye" /> :
+                        <FontAwesomeIcon icon="fa-solid fa-eye-slash" />
+                    }
+                </button>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center">
                 <button
                     className="button-normal"
                     onClick={submit} disabled={isLoading}>Submit</button>
             </div>
 
-            <p>
+            <div className="text-center">
                 {method == 'Login' ? 'Don\'t have an account? ' : 'Already have an account? '}
                 <a onClick={() => setMethod(alt)}
                     className="text-blue-600 underline hover:cursor-pointer active:text-blue-800">
                     {alt}
                 </a>
-            </p>
+            </div>
 
             {error && <div className="error mt-4">{error}</div>}
         </div>
