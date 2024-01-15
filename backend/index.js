@@ -7,13 +7,6 @@ const { Server } = require('socket.io');
 
 //middleware
 app.use(express.json());
-// app.use((req, res, next) => {
-//     console.log(req.url, req.method);
-//     next();
-// });
-
-//static
-// app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
 app.use('/dev', require('./routers/dev'));
