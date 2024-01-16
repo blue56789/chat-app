@@ -102,14 +102,14 @@ export default function Chat({ convo, name, setContent }) {
                 </span>
             </div>
 
-            <div className="h-full min-h-72 md:min-w-[500px] overflow-scroll border-b border-black mb-4 no-scrollbar">
+            <div className="md:min-w-[500px] flex-grow overflow-scroll border-b border-black mb-4 no-scrollbar">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>
             </div>
 
             <div className="flex items-center justify-between">
-                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8 mr-2" />
+                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8 mr-2 no-scrollbar" />
                 <button onClick={sendMessage} disabled={message == '' || loading} className="button-normal w-16 h-8"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
             </div>
 

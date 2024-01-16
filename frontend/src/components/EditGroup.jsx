@@ -64,7 +64,7 @@ export default function EditGroup({ setContent, convo }) {
                     className="button-icon"
                 ><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title  text-center mx-4">{add ? 'Add Members' : 'Edit group'}</span>
-                <div className="w-7"></div>
+                <div className="w-8"></div>
             </div>
             <div className="overflow-scroll h-full flex flex-col p-0.5">
                 {add ?
