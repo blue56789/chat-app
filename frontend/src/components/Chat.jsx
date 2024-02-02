@@ -13,6 +13,7 @@ export default function Chat({ convo, name, setContent }) {
     const { username, token } = useAuthContext();
     const { dispatchConvos } = useConvoContext();
     const msgRef = useRef(null);
+    const inputRef = useRef(null);
 
     const headers = {
         'Authorization': `Bearer ${token}`,
@@ -30,6 +31,12 @@ export default function Chat({ convo, name, setContent }) {
             socket.off('messageRecieved', addMessage);
         }
     }, [convo]);
+
+    useEffect(() => {
+        const input = inputRef.current;
+        input.style.height = '32px';
+        input.style.height = `${Math.min(input.scrollHeight, 96)}px`;
+    }, [message]);
 
     useEffect(() => {
         msgRef.current?.scrollIntoView();
@@ -90,7 +97,7 @@ export default function Chat({ convo, name, setContent }) {
 
     return (
         <>
-            <div className="flex justify-between items-center pb-2 border-b border-black">
+            <div className="flex justify-between items-center pb-2 border-b border-border-primary px-4 py-2">
                 <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title mx-4">{name}</span>
                 <span>
@@ -102,15 +109,15 @@ export default function Chat({ convo, name, setContent }) {
                 </span>
             </div>
 
-            <div className="md:min-w-[500px] flex-grow overflow-scroll border-b border-black mb-4 no-scrollbar">
+            <div className="md:min-w-[500px] flex-grow overflow-scroll border-b border-border-primary px-4 no-scrollbar">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>
             </div>
 
-            <div className="flex items-center justify-between">
-                <textarea type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none h-8 mr-2 no-scrollbar" />
-                <button onClick={sendMessage} disabled={message == '' || loading} className="button-normal w-16 h-8"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+            <div className="flex items-center justify-between p-4">
+                <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mr-2 no-scrollbar" />
+                <button onClick={sendMessage} disabled={message.match(/^\s*$/) || loading} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
             </div>
 
             {error && <div className="error mt-2">{error}</div>}

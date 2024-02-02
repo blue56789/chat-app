@@ -1,32 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@layer components{
-    .text-input{
-        @apply border border-black rounded px-1 flex-grow;
+@layer components {
+    .text-input {
+        @apply border border-border-primary rounded px-1 w-full bg-bg-secondary focus:outline-none;
     }
-    .error{
-        @apply border-2 border-red-600 bg-red-100 text-red-600 rounded-md px-2 py-1
+    .error {
+        @apply border-2 border-red-500 text-red-500 rounded-md px-2 py-1;
     }
-    .success{
-        @apply border-2 border-green-600 bg-green-100 text-green-600 rounded-md px-2 py-1
+    .success {
+        @apply border-2 border-green-500 text-green-500 rounded-md px-2 py-1;
     }
-    .button-normal{
-        @apply border-2 border-black hover:bg-black hover:text-white font-semibold cursor-pointer rounded px-1 py-0.5 disabled:cursor-default tracking-wide transition-all
+    .button-normal {
+        @apply border border-border-primary enabled:hover:bg-bg-tertiary font-semibold cursor-pointer rounded-full h-8 px-2 disabled:cursor-default tracking-wide transition-all;
     }
-    .button-icon{
-        @apply cursor-pointer border-2 border-black hover:bg-black hover:text-white rounded w-8 h-8 disabled:cursor-default transition-all
+    .button-icon {
+        @apply cursor-pointer border border-border-primary enabled:hover:bg-bg-tertiary rounded-full w-8 h-8 disabled:cursor-default transition-all;
     }
-    .title{
-        @apply font-bold text-3xl
+    .title {
+        @apply font-bold text-3xl;
     }
 }
-@layer utilities{
-    .no-scrollbar::-webkit-scrollbar{
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
-    .no-scrollbar{
+    .no-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
     }

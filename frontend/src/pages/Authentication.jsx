@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuthenticate from "../hooks/useAuthenticate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -7,20 +7,19 @@ function Authentication({ method, setMethod }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const alt = method == 'Login' ? 'Signup' : 'Login';
-    const { isLoading, error, authenticate } = useAuthenticate();
+    const { isLoading, error, setError, authenticate } = useAuthenticate();
 
     const showPassword = () => {
         setPass(pass === 'password' ? 'text' : 'password');
     };
     const submit = async () => {
         await authenticate(username, password, method.toLowerCase());
-        // if (!error) {
-        //     setPassword('');
-        //     setUsername('');
-        // }
     };
+
+    useEffect(() => { setError(null) }, [setError, password, username, method]);
+
     return (
-        <div className="flex flex-col border p-4 rounded-md shadow-2xl w-72 gap-4 bg-white">
+        <div className="flex flex-col border border-border-primary p-4 rounded-lg w-72 gap-4 transition-all">
             <h1 className="title text-center">{method}</h1>
 
             <div className="">
@@ -50,7 +49,7 @@ function Authentication({ method, setMethod }) {
 
             <div className="flex justify-center">
                 <button
-                    className="button-normal"
+                    className="button-normal w-full"
                     onClick={submit} disabled={isLoading}>Submit</button>
             </div>
 
@@ -62,7 +61,7 @@ function Authentication({ method, setMethod }) {
                 </a>
             </div>
 
-            {error && <div className="error mt-4">{error}</div>}
+            {error && <div className="error">{error}</div>}
         </div>
     );
 }

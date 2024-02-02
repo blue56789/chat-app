@@ -57,7 +57,7 @@ export default function EditGroup({ setContent, convo }) {
 
     return (
         <>
-            <div className="flex items-center border-b border-black pb-2 mb-2 md:min-w-[500px] justify-between">
+            <div className="flex items-center border-b border-border-primary py-2 px-4 mb-2 md:min-w-[500px] justify-between">
                 <button onClick={() => {
                     add ? setAdd(false) : setContent('chat');
                 }}
@@ -66,14 +66,14 @@ export default function EditGroup({ setContent, convo }) {
                 <span className="title  text-center mx-4">{add ? 'Add Members' : 'Edit group'}</span>
                 <div className="w-8"></div>
             </div>
-            <div className="overflow-scroll h-full flex flex-col p-0.5">
+            <div className="overflow-scroll h-full flex flex-col px-4 py-2 mb-4">
                 {add ?
                     <>
                         <div className="mb-1 flex flex-wrap">
                             {addUsers.map((el) => <span key={el} onClick={() => {
                                 const users = addUsers.filter((user) => user != el);
                                 setAddUsers(users);
-                            }} className="border border-black rounded hover:bg-gray-300 cursor-pointer px-1 py-0.5 m-0.5"
+                            }} className="border border-border-primary rounded hover:bg-bg-tertiary cursor-pointer px-1.5 py-0.5 m-0.5"
                             >{el}</span>)}
                         </div>
                         <Search onClick={(user) => {
@@ -84,11 +84,11 @@ export default function EditGroup({ setContent, convo }) {
                     <>
                         <p>Edit Group Name:</p>
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-input mb-2" />
-                        <p>Remove Members:</p>
+                        <p className="pt-2">Remove Members:</p>
                         <div className="h-full overflow-scroll px-2 pb-4 no-scrollbar">
                             {groupUsers.map(el =>
                                 <label key={el}
-                                    className="block border-b py-1 hover:shadow-md transition-all hover:cursor-pointer"
+                                    className="block border-b border-border-primary py-1 px-2 hover:bg-bg-secondary transition-all hover:cursor-pointer"
                                 >
                                     <input type="checkbox" onChange={(e) => {
                                         if (e.target.checked)
@@ -101,7 +101,7 @@ export default function EditGroup({ setContent, convo }) {
                                 </label>
                             )}
                         </div>
-                        <button onClick={() => setAdd(true)} className="block button-normal w-full mb-2 ">Add Members</button>
+                        <button onClick={() => setAdd(true)} className="block button-normal w-full my-2 ">Add Members</button>
                     </>}
                 <div className="flex">
                     {!add && <>

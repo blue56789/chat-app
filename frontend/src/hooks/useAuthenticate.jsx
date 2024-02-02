@@ -24,11 +24,11 @@ const useAuthenticate = () => {
             dispatch({ type: 'LOGIN', payload: user });
         } else {
             setError(json.error);
-            setTimeout(() => setError(false), 5000);
+            // setTimeout(() => setError(false), 5000);
         }
 
         setLoading(false);
     };
-    return { isLoading, error, authenticate };
+    return { isLoading, error, setError, authenticate };
 };
 export default useAuthenticate;

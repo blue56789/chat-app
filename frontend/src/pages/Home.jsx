@@ -51,11 +51,11 @@ export default function Home() {
 
     return (
         <>
-            <div className="border p-4 rounded shadow-2xl flex flex-col min-w-72 min-h-72 max-h-[calc(100%-30px)] max-w-[calc(100%-30px)] bg-white">
+            <div className="border rounded-lg flex flex-col min-w-72 min-h-72 max-h-[calc(100%-30px)] max-w-[calc(100%-30px)] border-border-primary transition-all">
                 {
                     {
                         'convos': <>
-                            <div className="flex justify-between items-center border-b border-black pb-2">
+                            <div className="flex justify-between items-center border-b border-border-primary px-4 py-2">
                                 <span className="title">{username}</span>
                                 <span className="mx-2">
                                     <button className="button-icon" onClick={() => setContent('add')}>

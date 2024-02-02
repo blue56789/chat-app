@@ -23,38 +23,39 @@ export default function AddNew({ setContent }) {
 
     return (
         <>
-            <div className="mb-2">
+            <div className="my-2 px-4">
                 <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
             </div>
-            <div className="flex mb-2">
+            <div className="flex my-2 px-4">
                 <button onClick={() => {
                     setAdd(true);
                 }}
-                    className={'w-full border rounded cursor-pointer hover:bg-gray-100 mr-1 ' + (add ? 'border-black' : 'border-gray-500 text-gray-500')}>
+                    className={'w-full border transition rounded cursor-pointer hover:bg-bg-tertiary mr-1 ' + (add ? 'border-txt-primary' : 'border-txt-tertiary text-txt-tertiary')}>
                     New Contact
                 </button>
                 <button onClick={() => {
                     setAdd(false);
                 }}
-                    className={'w-full border rounded cursor-pointer hover:bg-gray-100 ml-1 ' + (add ? 'border-gray-500 text-gray-500' : 'border-black')}>
+                    className={'w-full border transition rounded cursor-pointer hover:bg-bg-tertiary ml-1 ' + (add ? 'border-txt-tertiary text-txt-tertiary' : 'border-txt-primary')}>
                     New Group
                 </button>
             </div>
 
-            <>
+            <div className="flex flex-col mx-4 my-2">
                 {add ?
                     <Search onClick={addConvo} /> :
                     <>
                         <p>Group Name:</p>
-                        <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-2" />
+                        <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-4" />
                         {groupUsers.length > 0 && <>
-                            <div className="mb-1 flex flex-wrap">
+                            <p>Group Members:</p>
+                            <div className="mb-4 flex flex-wrap">
                                 {groupUsers.map((el) =>
                                     <div key={el} onClick={() => {
                                         const users = groupUsers.filter((user) => user != el);
                                         setGroupUsers(users);
                                     }}
-                                        className="border border-black rounded-sm hover:bg-gray-300 cursor-pointer px-1 py-0.5 m-0.5">
+                                        className="border border-border-primary rounded hover:bg-bg-tertiary cursor-pointer px-1.5 py-0.5 m-0.5">
                                         {el}
                                     </div>)}
                             </div> <br />
@@ -66,13 +67,13 @@ export default function AddNew({ setContent }) {
                         }} />
                     </>
                 }
-            </>
+            </div>
 
-            <div className="mb-2">
+            <div className="mb-4 mt-2 px-4">
                 {!add && <button onClick={createGroup} className="button-normal w-full">Create Group</button>}
             </div>
-            {error && <div className="error">{error}</div>}
-            {success && <div className="success">
+            {error && <div className="error mx-4 mb-4">{error}</div>}
+            {success && <div className="success mx-4 mb-4">
                 {add ? 'User added' : 'Group created'}
             </div>}
         </>
