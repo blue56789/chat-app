@@ -9,7 +9,6 @@ const { Server } = require('socket.io');
 app.use(express.json());
 
 //routes
-app.use('/dev', require('./routers/dev'));
 app.use('/user', require('./routers/user'));
 app.use('/api', require('./routers/api'));
 
