@@ -19,10 +19,10 @@ export default function Home() {
 
     useEffect(() => {
         socket.connect();
-        console.log('connected to socket');
+        // console.log('connected to socket');
         return () => {
             socket.disconnect();
-            console.log('disconnected from socket');
+            // console.log('disconnected from socket');
         };
     }, []);
 

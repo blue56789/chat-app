@@ -42,7 +42,7 @@ const getUsers = async (req, res) => {
             throw new Error('Please provide search query');
         const users = await User.find({
             $and: [
-                { username: { $regex: search } },
+                { username: { $regex: search, $options: 'i' } },
                 { username: { $ne: req.user } }
             ]
         }).select('-password');
