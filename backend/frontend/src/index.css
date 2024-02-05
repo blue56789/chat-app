@@ -4,7 +4,7 @@
 @tailwind utilities;
 @layer components {
     .text-input {
-        @apply border border-border-primary rounded px-1 w-full bg-bg-secondary focus:outline-none;
+        @apply border border-border-primary rounded px-1 w-full bg-bg-primary focus:outline-none;
     }
     .error {
         @apply border-2 border-red-500 text-red-500 rounded-md px-2 py-1;
@@ -13,10 +13,13 @@
         @apply border-2 border-green-500 text-green-500 rounded-md px-2 py-1;
     }
     .button-normal {
-        @apply border border-border-primary enabled:hover:bg-bg-tertiary font-semibold cursor-pointer rounded-full h-8 px-2 disabled:cursor-default tracking-wide transition-all;
+        @apply border  border-border-primary enabled:hover:bg-btn-bg-hover enabled:hover:text-black enabled:hover:border-white font-semibold cursor-pointer rounded-full h-8 px-2 disabled:cursor-default tracking-wide transition-all;
     }
     .button-icon {
-        @apply cursor-pointer border border-border-primary enabled:hover:bg-bg-tertiary rounded-full w-8 h-8 disabled:cursor-default transition-all;
+        @apply cursor-pointer border  border-border-primary enabled:hover:bg-btn-bg-hover enabled:hover:text-black enabled:hover:border-white rounded-full w-8 h-8 disabled:cursor-default transition-all;
+    }
+    .loader {
+        @apply w-8 h-8 border-2 border-white border-b-transparent rounded-full animate-spin;
     }
     .title {
         @apply font-bold text-3xl;

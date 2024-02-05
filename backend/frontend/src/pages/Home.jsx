@@ -51,7 +51,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="border rounded-lg flex flex-col min-w-72 min-h-72 max-h-[calc(100%-30px)] max-w-[calc(100%-30px)] border-border-primary transition-all">
+            <div className="border rounded-lg flex flex-col min-w-72 min-h-72 max-h-[calc(100%-30px)] max-w-[calc(100%-30px)] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary transition-all">
                 {
                     {
                         'convos': <>

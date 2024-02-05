@@ -19,7 +19,7 @@ function Authentication({ method, setMethod }) {
     useEffect(() => { setError(null) }, [setError, password, username, method]);
 
     return (
-        <div className="flex flex-col border border-border-primary p-4 rounded-lg w-72 gap-4 transition-all">
+        <div className="flex flex-col border bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 gap-4 transition-all">
             <h1 className="title text-center">{method}</h1>
 
             <div className="">
@@ -48,9 +48,12 @@ function Authentication({ method, setMethod }) {
             </div>
 
             <div className="flex justify-center">
-                <button
-                    className="button-normal w-full"
-                    onClick={submit} disabled={isLoading}>Submit</button>
+                {isLoading ?
+                    <div className="loader"></div> :
+                    <button
+                        className="button-normal w-full"
+                        onClick={submit} disabled={isLoading}>Submit</button>
+                }
             </div>
 
             <div className="text-center">
