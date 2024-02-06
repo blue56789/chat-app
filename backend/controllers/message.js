@@ -27,13 +27,4 @@ const getMessages = async (req, res) => {
     }
 };
 
-const getAllMessages = async (req, res) => {
-    try {
-        const messages = await Message.find({});
-        res.json(messages);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-module.exports = { sendMessage, getMessages, getAllMessages };
+module.exports = { sendMessage, getMessages };

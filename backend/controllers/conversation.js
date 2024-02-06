@@ -50,13 +50,4 @@ const getConvos = async (req, res) => {
     }
 };
 
-const getAllConvos = async (req, res) => {
-    try {
-        const convos = await Conversation.find();
-        res.json(convos);
-    } catch (error) {
-        res.status(400).json(convos);
-    }
-};
-
-module.exports = { addConvo, getConvos, getAllConvos, delConvo };
+module.exports = { addConvo, getConvos, delConvo };

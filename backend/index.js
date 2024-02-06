@@ -8,8 +8,9 @@ const { Server } = require('socket.io');
 //middleware
 app.use(express.json());
 
+app.use(express.static(path.resolve(__dirname, 'frontend', 'dist')))
+
 //routes
-app.use('/dev', require('./routers/dev'));
 app.use('/user', require('./routers/user'));
 app.use('/api', require('./routers/api'));
 
