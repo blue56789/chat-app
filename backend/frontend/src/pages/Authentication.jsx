@@ -26,7 +26,7 @@ function Authentication({ method, setMethod }) {
                 <p>Username:</p>
                 <input
                     type="text"
-                    onChange={(e) => { setUsername(e.target.value) }}
+                    onChange={(e) => { setUsername(e.target.value.toLowerCase()) }}
                     value={username}
                     className="text-input"
                 />

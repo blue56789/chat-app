@@ -69,13 +69,16 @@ export default function EditGroup({ setContent, convo }) {
             <div className="overflow-scroll h-full flex flex-col px-4 py-2 mb-4">
                 {add ?
                     <>
-                        <div className="mb-1 flex flex-wrap">
-                            {addUsers.map((el) => <span key={el} onClick={() => {
-                                const users = addUsers.filter((user) => user != el);
-                                setAddUsers(users);
-                            }} className="border border-border-primary rounded hover:bg-bg-tertiary cursor-pointer px-1.5 py-0.5 m-0.5"
-                            >{el}</span>)}
-                        </div>
+                        {addUsers.length > 0 && <>
+                            <p>New Members:</p>
+                            <div className="mb-4 flex flex-wrap">
+                                {addUsers.map((el) => <span key={el} onClick={() => {
+                                    const users = addUsers.filter((user) => user != el);
+                                    setAddUsers(users);
+                                }} className="border border-border-primary rounded hover:bg-bg-tertiary cursor-pointer px-1.5 py-0.5 m-0.5"
+                                >{el}</span>)}
+                            </div>
+                        </>}
                         <Search onClick={(user) => {
                             if (!addUsers.includes(user.username))
                                 setAddUsers([...addUsers, user.username]);
@@ -88,15 +91,15 @@ export default function EditGroup({ setContent, convo }) {
                         <div className="h-full overflow-scroll px-2 pb-4 no-scrollbar">
                             {groupUsers.map(el =>
                                 <label key={el}
-                                    className="block border-b border-border-primary py-1 px-2 hover:bg-bg-secondary transition-all hover:cursor-pointer"
+                                    className="has-[:checked]:text-txt-tertiary block border-b border-border-primary py-1 px-2 hover:bg-bg-secondary transition-all hover:cursor-pointer"
                                 >
-                                    <input type="checkbox" onChange={(e) => {
+                                    <input type="checkbox" checked={delUsers.includes(el)} onChange={(e) => {
                                         if (e.target.checked)
                                             setDelUsers(delUsers.concat(el))
                                         else
                                             setDelUsers(delUsers.filter((user) => user != el));
                                     }}
-                                        className='mr-2' />
+                                        className='hidden' />
                                     <span>{el}</span>
                                 </label>
                             )}

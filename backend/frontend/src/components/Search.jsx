@@ -1,28 +1,21 @@
 import { useState } from "react";
 import useAuthContext from "../hooks/useAuthContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Search({ onClick }) {
     const { token } = useAuthContext();
-    const [query, setQuery] = useState('');
     const [result, setResult] = useState([]);
 
-    const search = async () => {
-        setResult([]);
+    const search = async (query) => {
         const response = await fetch(`/user?search=${query}`, { headers: { 'Authorization': `Bearer ${token}` } });
         const json = await response.json();
         if (response.ok) {
             setResult(json);
         }
-        // console.log(json);
     };
 
     return (
         <>
-            <div className="flex mb-2">
-                <input type="text" onChange={(e) => { setQuery(e.target.value); }} placeholder="Enter username" className="text-input mr-2" />
-                <button onClick={search} className="button-icon px-2"><FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /></button>
-            </div>
+            <input type="text" onChange={(e) => { search(e.target.value); }} placeholder="Enter username" className="text-input mb-2" />
             <div className="h-full overflow-scroll no-scrollbar ">
                 {
                     result.length == 0 ?

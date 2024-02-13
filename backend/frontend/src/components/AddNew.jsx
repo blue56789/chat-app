@@ -30,13 +30,13 @@ export default function AddNew({ setContent }) {
                 <button onClick={() => {
                     setAdd(true);
                 }}
-                    className={'w-full border transition rounded cursor-pointer hover:bg-bg-tertiary mr-1 ' + (add ? 'border-txt-primary' : 'border-txt-tertiary text-txt-tertiary')}>
+                    className={'h-8 w-full border transition rounded cursor-pointer hover:bg-bg-tertiary mr-1 ' + (add ? 'border-txt-primary' : 'border-txt-tertiary text-txt-tertiary')}>
                     New Contact
                 </button>
                 <button onClick={() => {
                     setAdd(false);
                 }}
-                    className={'w-full border transition rounded cursor-pointer hover:bg-bg-tertiary ml-1 ' + (add ? 'border-txt-tertiary text-txt-tertiary' : 'border-txt-primary')}>
+                    className={'h-8 w-full border transition rounded cursor-pointer hover:bg-bg-tertiary ml-1 ' + (add ? 'border-txt-tertiary text-txt-tertiary' : 'border-txt-primary')}>
                     New Group
                 </button>
             </div>

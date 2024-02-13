@@ -4,7 +4,7 @@
 @tailwind utilities;
 @layer components {
     .text-input {
-        @apply border border-border-primary rounded px-1 w-full bg-bg-primary focus:outline-none;
+        @apply border border-border-primary rounded px-1 w-full bg-bg-primary focus:outline-none h-8;
     }
     .error {
         @apply border-2 border-red-500 text-red-500 rounded-md px-2 py-1;

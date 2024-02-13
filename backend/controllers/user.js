@@ -38,8 +38,10 @@ const signup = async (req, res) => {
 const getUsers = async (req, res) => {
     const search = req.query.search;
     try {
-        if (!search)
-            throw new Error('Please provide search query');
+        if (!search) {
+            res.json([]);
+            return;
+        }
         const users = await User.find({
             $and: [
                 { username: { $regex: search, $options: 'i' } },
