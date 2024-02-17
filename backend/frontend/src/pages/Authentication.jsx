@@ -12,47 +12,56 @@ function Authentication({ method, setMethod }) {
     const showPassword = () => {
         setPass(pass === 'password' ? 'text' : 'password');
     };
-    const submit = async () => {
-        await authenticate(username, password, method.toLowerCase());
+    const submit = async (e) => {
+        e.preventDefault();
+        await authenticate(username.trim(), password.trim(), method.toLowerCase());
     };
 
     useEffect(() => { setError(null) }, [setError, password, username, method]);
 
     return (
-        <div className="flex flex-col border bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 gap-4 transition-all">
+        <form
+            className="flex flex-col border bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 transition-all gap-4"
+            onSubmit={submit}
+        >
             <h1 className="title text-center">{method}</h1>
 
-            <div className="">
-                <p>Username:</p>
+            <label>
+                Username:
                 <input
                     type="text"
                     onChange={(e) => { setUsername(e.target.value.toLowerCase()) }}
                     value={username}
                     className="text-input"
+                    autoFocus
+                    required
                 />
-            </div>
+            </label>
 
-            <div className="">
-                <p>Password:</p>
+            <label>
+                Password:
                 <input
                     type={pass}
                     onChange={(e) => { setPassword(e.target.value) }}
                     value={password}
                     className="text-input"
+                    required
                 />
-                <button onClick={showPassword}
+                <span onClick={showPassword}
                     className="ml-[-25px]"
                 >
                     <FontAwesomeIcon icon="fa-solid fa-eye" className={pass == 'password' ? 'text-gray-500' : 'text-blue-500'} />
-                </button>
-            </div>
+                </span>
+            </label>
 
             <div className="flex justify-center">
                 {isLoading ?
                     <div className="loader"></div> :
-                    <button
+                    <input
+                        type="submit"
+                        value="Submit"
                         className="button-normal w-full"
-                        onClick={submit} disabled={isLoading}>Submit</button>
+                        disabled={isLoading} />
                 }
             </div>
 
@@ -65,7 +74,7 @@ function Authentication({ method, setMethod }) {
             </div>
 
             {error && <div className="error">{error}</div>}
-        </div>
+        </form>
     );
 }
 export default Authentication;

@@ -5,7 +5,7 @@ import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Chat({ convo, name, setContent }) {
+export default function Chat({ convo, setContent }) {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState([]);
@@ -14,6 +14,7 @@ export default function Chat({ convo, name, setContent }) {
     const { dispatchConvos } = useConvoContext();
     const msgRef = useRef(null);
     const inputRef = useRef(null);
+    const name = convo.isGroupChat ? convo.name : (convo.users[0] == username ? convo.users[1] : convo.users[0])
 
     const headers = {
         'Authorization': `Bearer ${token}`,
@@ -21,14 +22,13 @@ export default function Chat({ convo, name, setContent }) {
     };
 
     useEffect(() => {
-        const addMessage = (msg) => {
-            // console.log('recieved');
+        const newMessage = (msg) => {
             if (msg.conversation === convo._id)
                 setMessages(messages => [...messages, msg]);
         };
-        socket.on('messageRecieved', addMessage);
+        socket.on('messageRecieved', newMessage);
         return () => {
-            socket.off('messageRecieved', addMessage);
+            socket.off('messageRecieved', newMessage);
         }
     }, [convo]);
 
@@ -46,11 +46,8 @@ export default function Chat({ convo, name, setContent }) {
         (async () => {
             const response = await fetch(`/api/msg/${convo._id}`, { headers: { 'Authorization': `Bearer ${token}` } });
             const json = await response.json();
-            // console.log(json);
-            if (response.ok)
-                setMessages(json);
-            else
-                setError(json.error);
+            if (response.ok) setMessages(json);
+            else setError(json.error);
         })();
     }, [convo, token]);
 
@@ -74,7 +71,6 @@ export default function Chat({ convo, name, setContent }) {
         } else
             setError(msg.error);
         setLoading(false);
-        // console.log(msg);
     };
 
     const delConvo = async () => {
@@ -92,7 +88,6 @@ export default function Chat({ convo, name, setContent }) {
             setContent('convos')
         } else
             setError(json.error);
-        // console.log(json);
     };
 
     return (
@@ -109,14 +104,14 @@ export default function Chat({ convo, name, setContent }) {
                 </span>
             </div>
 
-            <div className="md:min-w-[500px] flex-grow overflow-scroll border-b border-border-primary px-4 no-scrollbar">
+            <div className="md:min-w-[500px] flex-grow overflow-scroll border-b border-border-primary px-4">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>
             </div>
 
             <div className="flex items-center justify-between p-4">
-                <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mr-2 no-scrollbar" />
+                <textarea autoFocus ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mr-2 no-scrollbar" />
                 <button onClick={sendMessage} disabled={message.match(/^\s*$/) || loading} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
             </div>
 

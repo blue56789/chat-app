@@ -20,7 +20,7 @@ const addGroup = async (req, res) => {
 };
 
 const editGroup = async (req, res) => {
-    const { addUsers, delUsers, name, id } = req.body;
+    const { delMembers, name, id } = req.body;
     const username = req.user;
     try {
         let group = await Conversation.findById(id);
@@ -29,11 +29,8 @@ const editGroup = async (req, res) => {
         if (group.admin != username)
             throw new Error('Unauthorized');
 
-
-        if (addUsers)
-            group = await Conversation.findByIdAndUpdate(id, { $addToSet: { users: { $each: addUsers } } }, { new: true });
-        if (delUsers)
-            group = await Conversation.findByIdAndUpdate(id, { $pullAll: { users: delUsers } }, { new: true });
+        if (delMembers)
+            group = await Conversation.findByIdAndUpdate(id, { $pullAll: { users: delMembers } }, { new: true });
         if (name)
             group = await Conversation.findByIdAndUpdate(id, { name: name }, { new: true });
 
@@ -42,6 +39,25 @@ const editGroup = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+const addMembers = async (req, res) => {
+    const { newMembers, id } = req.body;
+    const username = req.user;
+    try {
+        let group = await Conversation.findById(id);
+        if (!group || !group.isGroupChat)
+            throw new Error('Group doesnt exist');
+        if (group.admin != username)
+            throw new Error('Unauthorized');
+
+        if (newMembers)
+            group = await Conversation.findByIdAndUpdate(id, { $addToSet: { users: { $each: newMembers } } }, { new: true });
+
+        res.json(await group.populate('lastMessage'));
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
 
 const delGroup = async (req, res) => {
     const { id } = req.body;
@@ -58,4 +74,4 @@ const delGroup = async (req, res) => {
     }
 };
 
-module.exports = { addGroup, editGroup, delGroup };
+module.exports = { addGroup, editGroup, addMembers, delGroup };

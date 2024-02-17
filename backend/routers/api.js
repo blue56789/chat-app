@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { getConvos, addConvo, delConvo } = require('../controllers/conversation');
-const { addGroup, editGroup, delGroup } = require('../controllers/group');
+const { addGroup, editGroup, delGroup, addMembers } = require('../controllers/group');
 const { sendMessage, getMessages } = require('../controllers/message');
 const requireAuth = require('../middleware/requireAuth');
 
@@ -17,5 +17,7 @@ router.route('/group')
     .post(addGroup)
     .put(editGroup)
     .delete(delGroup);
+
+router.post('/group/add', addMembers);
 
 module.exports = router;

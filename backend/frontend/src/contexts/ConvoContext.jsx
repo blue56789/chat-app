@@ -23,7 +23,7 @@ function reducer(convos, action) {
                 return el;
             });
             if (!found)
-                return [...newConvos, action.data.convo];
+                return [...convos, action.data.convo];
             return newConvos;
         }
         default:

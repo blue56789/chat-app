@@ -8,22 +8,18 @@ import GroupInfo from "../components/GroupInfo";
 import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddMembers from "../components/AddMembers";
 
 export default function Home() {
     const { username, dispatch } = useAuthContext();
     const { dispatchConvos } = useConvoContext();
 
     const [chat, setChat] = useState(null);
-    const [name, setName] = useState(null);
     const [content, setContent] = useState('convos');
 
     useEffect(() => {
         socket.connect();
-        // console.log('connected to socket');
-        return () => {
-            socket.disconnect();
-            // console.log('disconnected from socket');
-        };
+        return () => socket.disconnect();
     }, []);
 
     useEffect(() => {
@@ -34,16 +30,16 @@ export default function Home() {
         const newMsg = (msg, convo) => {
             dispatchConvos({ type: 'update', data: { id: convo._id, convo: convo } });
         };
+
         const delConvo = (id) => {
-            // console.log('del');
             setContent('convos');
             dispatchConvos({ type: 'del', data: id });
         };
+
         socket.on('messageRecieved', newMsg);
         socket.on('convoDeleted', delConvo);
-        // console.log('on');
+
         return () => {
-            // console.log('off');
             socket.off('messageRecieved', newMsg);
             socket.off('convoDeleted', delConvo);
         };
@@ -65,12 +61,13 @@ export default function Home() {
                                 </span>
                             </div>
 
-                            <Convos setChat={setChat} setName={setName} setContent={setContent} />
+                            <Convos setChat={setChat} setContent={setContent} />
                         </>,
-                        'chat': chat && <Chat convo={chat} name={chat.isGroupChat ? chat.name : name} setChat={setChat} setContent={setContent} />,
+                        'chat': chat && <Chat convo={chat} setChat={setChat} setContent={setContent} />,
                         'add': <AddNew setContent={setContent} />,
-                        'editGroup': <EditGroup convo={chat} setContent={setContent} />,
-                        'groupInfo': <GroupInfo setContent={setContent} convo={chat} />
+                        'groupInfo': <GroupInfo setContent={setContent} convo={chat} />,
+                        'editGroup': <EditGroup convo={chat} setConvo={setChat} setContent={setContent} />,
+                        'addMembers': <AddMembers setContent={setContent} convo={chat} setConvo={setChat} />
                     }[content]
                 }
             </div>
