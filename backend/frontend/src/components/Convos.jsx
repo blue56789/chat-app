@@ -7,7 +7,7 @@ export default function Convos({ setChat, setContent }) {
 
     return (
         <>
-            <div className="overflow-scroll no-scrollbar">
+            <div className="overflow-scroll no-scrollbar mb-1">
                 {convos.map(el => {
                     const name = el.isGroupChat ? el.name : (el.users[0] == username ? el.users[1] : el.users[0]);
                     return (

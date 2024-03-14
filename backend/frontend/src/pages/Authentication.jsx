@@ -6,6 +6,7 @@ function Authentication({ method, setMethod }) {
     const [pass, setPass] = useState('password');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [rePassword, setRePassword] = useState('');
     const alt = method == 'Login' ? 'Signup' : 'Login';
     const { isLoading, error, setError, authenticate } = useAuthenticate();
 
@@ -14,7 +15,10 @@ function Authentication({ method, setMethod }) {
     };
     const submit = async (e) => {
         e.preventDefault();
-        await authenticate(username.trim(), password.trim(), method.toLowerCase());
+        if (method == 'Signup' && password !== rePassword)
+            setError('Passwords don\'t match');
+        else
+            await authenticate(username.trim(), password.trim(), method.toLowerCase());
     };
 
     useEffect(() => { setError(null) }, [setError, password, username, method]);
@@ -53,6 +57,20 @@ function Authentication({ method, setMethod }) {
                     <FontAwesomeIcon icon="fa-solid fa-eye" className={pass == 'password' ? 'text-gray-500' : 'text-blue-500'} />
                 </span>
             </label>
+
+            {
+                method == 'Signup' &&
+                <label>
+                    Confirm Password:
+                    <input
+                        type="password"
+                        onChange={(e) => { setRePassword(e.target.value) }}
+                        value={rePassword}
+                        className="text-input"
+                        required
+                    />
+                </label>
+            }
 
             <div className="flex justify-center">
                 {isLoading ?
