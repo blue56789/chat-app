@@ -20,7 +20,7 @@ export default function Search({ onClick }) {
                 {
                     result.length == 0 ?
                         <p>No Results</p> :
-                        <>{result.map(el => <div key={el._id} className="border-b border-border-primary py-1 hover:bg-bg-secondary cursor-pointer transition-all px-2" onClick={() => { onClick(el); }}>
+                        <>{result.map(el => <div key={el._id} className="border-b border-border-primary hover:bg-bg-secondary cursor-pointer transition-all p-2" onClick={() => { onClick(el); }}>
                             {el.username}<br />
                         </div>)}</>
                 }

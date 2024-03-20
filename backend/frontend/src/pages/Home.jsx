@@ -47,13 +47,13 @@ export default function Home() {
 
     return (
         <>
-            <div className="border rounded-lg flex flex-col min-w-72 min-h-72 max-h-[calc(100%-30px)] max-w-[calc(100%-30px)] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary transition-all">
+            <div className="border rounded-lg flex flex-col min-w-72 min-h-72 max-h-[95dvh] max-w-[95dvw] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary transition-all">
                 {
                     {
                         'convos': <>
-                            <div className="flex justify-between items-center border-b border-border-primary px-4 py-2">
+                            <div className="flex justify-between items-center border-b border-border-primary p-4">
                                 <span className="title">{username}</span>
-                                <span className="mx-2">
+                                <span className="ml-2">
                                     <button className="button-icon" onClick={() => setContent('add')}>
                                         <FontAwesomeIcon icon="fa-solid fa-plus" />
                                     </button>

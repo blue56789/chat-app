@@ -92,7 +92,7 @@ export default function Chat({ convo, setContent }) {
 
     return (
         <>
-            <div className="flex justify-between items-center pb-2 border-b border-border-primary px-4 py-2">
+            <div className="flex justify-between items-center border-b border-border-primary px-4 py-2">
                 <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title mx-4">{name}</span>
                 <span>

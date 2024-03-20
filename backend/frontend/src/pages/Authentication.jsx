@@ -54,7 +54,7 @@ function Authentication({ method, setMethod }) {
                 <span onClick={showPassword}
                     className="ml-[-25px]"
                 >
-                    <FontAwesomeIcon icon="fa-solid fa-eye" className={pass == 'password' ? 'text-gray-500' : 'text-blue-500'} />
+                    <FontAwesomeIcon icon="fa-solid fa-eye" className={`${pass == 'password' ? 'text-gray-500' : 'text-blue-500'} hover:cursor-pointer`} />
                 </span>
             </label>
 

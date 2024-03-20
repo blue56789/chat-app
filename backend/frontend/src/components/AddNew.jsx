@@ -41,7 +41,7 @@ export default function AddNew({ setContent }) {
                 </button>
             </div>
 
-            <div className="flex flex-col mx-4 my-2">
+            <div className="flex flex-col mx-4 my-2 overflow-scroll">
                 {add ?
                     <Search onClick={addConvo} /> :
                     <>
