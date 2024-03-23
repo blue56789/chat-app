@@ -23,10 +23,10 @@ export default function AddNew({ setContent }) {
 
     return (
         <>
-            <div className="my-2 px-4">
+            <div className="p-4 border-b border-border-primary">
                 <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
             </div>
-            <div className="flex my-2 px-4">
+            <div className="flex p-4">
                 <button onClick={() => {
                     setAdd(true);
                 }}
@@ -41,12 +41,14 @@ export default function AddNew({ setContent }) {
                 </button>
             </div>
 
-            <div className="flex flex-col mx-4 my-2 overflow-scroll">
+            <div className="flex flex-col mx-4 my-2 h-full overflow-scroll">
                 {add ?
                     <Search onClick={addConvo} /> :
                     <>
                         <p>Group Name:</p>
-                        <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-4" />
+                        <div>
+                            <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-4" />
+                        </div>
                         {groupUsers.length > 0 && <>
                             <p>Group Members:</p>
                             <div className="mb-4 flex flex-wrap">

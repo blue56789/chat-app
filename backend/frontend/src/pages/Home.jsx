@@ -47,29 +47,30 @@ export default function Home() {
 
     return (
         <>
-            <div className="border rounded-lg flex flex-col min-w-72 min-h-72 max-h-[95dvh] max-w-[95dvw] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary transition-all">
-                {
+            <div className="flex border border-border-primary rounded-lg h-[calc(100%-20px)] min-w-72 max-w-[calc(100%-20px)] md:w-[calc(100%-20px)] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] overflow-hidden transition-all">
+                <div className={`${content == 'convos' ? 'flex' : 'hidden'} md:flex flex-col w-full md:min-w-72 md:max-w-[30%] md:border-r md:border-border-primary`}>
+                    <div className="flex justify-between items-center border-b border-border-primary p-4">
+                        <span className="title">{username}</span>
+                        <span className="ml-2">
+                            <button className="button-icon" onClick={() => setContent('add')}>
+                                <FontAwesomeIcon icon="fa-solid fa-plus" />
+                            </button>
+                            <button className="button-normal ml-2" onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
+                        </span>
+                    </div>
+                    <Convos setChat={setChat} setContent={setContent} />
+                </div>
+                <div className={`${content == 'convos' ? 'hidden' : 'flex'} md:flex flex-col w-full h-full overflow-scroll`}>
                     {
-                        'convos': <>
-                            <div className="flex justify-between items-center border-b border-border-primary p-4">
-                                <span className="title">{username}</span>
-                                <span className="ml-2">
-                                    <button className="button-icon" onClick={() => setContent('add')}>
-                                        <FontAwesomeIcon icon="fa-solid fa-plus" />
-                                    </button>
-                                    <button className="button-normal ml-2" onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
-                                </span>
-                            </div>
-
-                            <Convos setChat={setChat} setContent={setContent} />
-                        </>,
-                        'chat': chat && <Chat convo={chat} setChat={setChat} setContent={setContent} />,
-                        'add': <AddNew setContent={setContent} />,
-                        'groupInfo': <GroupInfo setContent={setContent} convo={chat} />,
-                        'editGroup': <EditGroup convo={chat} setConvo={setChat} setContent={setContent} />,
-                        'addMembers': <AddMembers setContent={setContent} convo={chat} setConvo={setChat} />
-                    }[content]
-                }
+                        {
+                            'chat': chat && <Chat convo={chat} setChat={setChat} setContent={setContent} />,
+                            'add': <AddNew setContent={setContent} />,
+                            'groupInfo': <GroupInfo setContent={setContent} convo={chat} />,
+                            'editGroup': <EditGroup convo={chat} setConvo={setChat} setContent={setContent} />,
+                            'addMembers': <AddMembers setContent={setContent} convo={chat} setConvo={setChat} />
+                        }[content]
+                    }
+                </div>
             </div>
         </>
     );

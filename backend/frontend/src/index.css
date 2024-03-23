@@ -22,7 +22,7 @@
         @apply w-8 h-8 border-2 border-white border-b-transparent rounded-full animate-spin;
     }
     .title {
-        @apply font-bold text-3xl;
+        @apply font-bold text-2xl;
     }
 }
 @layer utilities {

@@ -5,7 +5,7 @@ export default function GroupInfo({ setContent, convo }) {
     const { username } = useAuthContext();
     return (
         <>
-            <div className="flex border-b border-border-primary px-4 py-2 items-center justify-between">
+            <div className="flex border-b border-border-primary p-4 items-center justify-between">
                 <button onClick={() => setContent('chat')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title text-center mx-4">Members</span>
                 <div className="w-8"></div>

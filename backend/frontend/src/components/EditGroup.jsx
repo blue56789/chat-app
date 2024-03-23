@@ -53,7 +53,7 @@ export default function EditGroup({ setContent, setConvo, convo }) {
 
     return (
         <>
-            <div className="flex items-center border-b border-border-primary py-2 px-4 mb-2 md:min-w-[500px] justify-between">
+            <div className="flex items-center border-b border-border-primary p-4 mb-2 md:min-w-[500px] justify-between">
                 <button onClick={() => setContent('chat')}
                     className="button-icon"
                 ><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
@@ -62,7 +62,9 @@ export default function EditGroup({ setContent, setConvo, convo }) {
             </div>
             <div className="overflow-scroll h-full flex flex-col px-4 py-2 mb-4">
                 <p>Edit Group Name:</p>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-input mb-2" />
+                <div>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-input mb-2" />
+                </div>
                 <p className="pt-2">Remove Members:</p>
                 <div className="h-full overflow-scroll px-2 pb-4 no-scrollbar">
                     {groupUsers.map(el =>
@@ -80,7 +82,9 @@ export default function EditGroup({ setContent, setConvo, convo }) {
                         </label>
                     )}
                 </div>
-                <button onClick={() => setContent('addMembers')} className="block button-normal w-full my-2 ">Add Members</button>
+                <div>
+                    <button onClick={() => setContent('addMembers')} className="block button-normal w-full my-2 ">Add Members</button>
+                </div>
                 <div className="flex">
                     <button onClick={editGroup} className="button-normal w-full mr-1 ">Save</button>
                     <button onClick={delGroup} className="button-normal w-full ml-1 ">Delete Group</button>

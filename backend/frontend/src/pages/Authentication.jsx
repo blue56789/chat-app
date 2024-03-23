@@ -25,12 +25,12 @@ function Authentication({ method, setMethod }) {
 
     return (
         <form
-            className="flex flex-col border bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 transition-all gap-4"
+            className="flex flex-col border bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 transition-all"
             onSubmit={submit}
         >
-            <h1 className="title text-center">{method}</h1>
+            <h1 className="title text-center mb-4">{method}</h1>
 
-            <label>
+            <label className="mb-4">
                 Username:
                 <input
                     type="text"
@@ -42,7 +42,7 @@ function Authentication({ method, setMethod }) {
                 />
             </label>
 
-            <label>
+            <label className="mb-4">
                 Password:
                 <input
                     type={pass}
@@ -60,7 +60,7 @@ function Authentication({ method, setMethod }) {
 
             {
                 method == 'Signup' &&
-                <label>
+                <label className="mb-4">
                     Confirm Password:
                     <input
                         type="password"
@@ -72,7 +72,7 @@ function Authentication({ method, setMethod }) {
                 </label>
             }
 
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-4">
                 {isLoading ?
                     <div className="loader"></div> :
                     <input
@@ -91,7 +91,7 @@ function Authentication({ method, setMethod }) {
                 </a>
             </div>
 
-            {error && <div className="error">{error}</div>}
+            {error && <div className="error mt-4">{error}</div>}
         </form>
     );
 }

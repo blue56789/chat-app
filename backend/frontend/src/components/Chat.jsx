@@ -43,6 +43,7 @@ export default function Chat({ convo, setContent }) {
     }, [messages]);
 
     useEffect(() => {
+        setMessages([]);
         (async () => {
             const response = await fetch(`/api/msg/${convo._id}`, { headers: { 'Authorization': `Bearer ${token}` } });
             const json = await response.json();
@@ -92,7 +93,7 @@ export default function Chat({ convo, setContent }) {
 
     return (
         <>
-            <div className="flex justify-between items-center border-b border-border-primary px-4 py-2">
+            <div className="flex justify-between items-center border-b border-border-primary p-4">
                 <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title mx-4">{name}</span>
                 <span>
@@ -104,7 +105,7 @@ export default function Chat({ convo, setContent }) {
                 </span>
             </div>
 
-            <div className="md:min-w-[500px] flex-grow overflow-scroll border-b border-border-primary px-4">
+            <div className=" flex-grow overflow-scroll border-b border-border-primary px-4">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>
