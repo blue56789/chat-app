@@ -18,7 +18,7 @@ export default function Search({ onClick }) {
             <div>
                 <input type="text" onChange={(e) => { search(e.target.value); }} placeholder="Enter username" className="text-input mb-2" />
             </div>
-            <div className="h-full overflow-scroll no-scrollbar ">
+            <div className="h-full overflow-y-scroll overflow-x-hidden no-scrollbar ">
                 {
                     result.length == 0 ?
                         <p>No Results</p> :

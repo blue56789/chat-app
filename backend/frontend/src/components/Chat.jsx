@@ -105,7 +105,7 @@ export default function Chat({ convo, setContent }) {
                 </span>
             </div>
 
-            <div className=" flex-grow overflow-scroll border-b border-border-primary px-4">
+            <div className=" flex-grow overflow-x-hidden overflow-y-scroll border-b border-border-primary px-4">
                 {messages.length == 0 && <p>No messages</p>}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
                 <div ref={msgRef}></div>

@@ -47,8 +47,8 @@ export default function Home() {
 
     return (
         <>
-            <div className="flex border border-border-primary rounded-lg h-[calc(100%-20px)] min-w-72 max-w-[calc(100%-20px)] md:w-[calc(100%-20px)] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] overflow-hidden transition-all">
-                <div className={`${content == 'convos' ? 'flex' : 'hidden'} md:flex flex-col w-full md:min-w-72 md:max-w-[30%] md:border-r md:border-border-primary`}>
+            <div className="flex border border-border-primary rounded-lg h-[calc(100%-20px)] w-[calc(100%-20px)] bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] overflow-hidden transition-all">
+                <div className={`${content == 'convos' ? 'flex' : 'hidden'} sm:flex flex-col w-full sm:min-w-72 sm:max-w-[30%] sm:border-r sm:border-border-primary`}>
                     <div className="flex justify-between items-center border-b border-border-primary p-4">
                         <span className="title">{username}</span>
                         <span className="ml-2">
@@ -60,7 +60,7 @@ export default function Home() {
                     </div>
                     <Convos setChat={setChat} setContent={setContent} />
                 </div>
-                <div className={`${content == 'convos' ? 'hidden' : 'flex'} md:flex flex-col w-full h-full overflow-scroll`}>
+                <div className={`${content == 'convos' ? 'hidden' : 'flex'} sm:flex flex-col w-full h-full overflow-hidden`}>
                     {
                         {
                             'chat': chat && <Chat convo={chat} setChat={setChat} setContent={setContent} />,
