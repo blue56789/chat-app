@@ -22,7 +22,7 @@ export default function AddNew({ setContent }) {
     }
 
     return (
-        <>
+        <div className="flex flex-col h-full overflow-scroll no-scrollbar">
             <div className="p-4 border-b border-border-primary">
                 <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
             </div>
@@ -41,7 +41,7 @@ export default function AddNew({ setContent }) {
                 </button>
             </div>
 
-            <div className="flex flex-col mx-4 my-2 h-full overflow-hidden">
+            <div className="flex flex-col mx-4 my-2 h-full">
                 {add ?
                     <Search onClick={addConvo} /> :
                     <>
@@ -78,6 +78,6 @@ export default function AddNew({ setContent }) {
             {success && <div className="success mx-4 mb-4">
                 {add ? 'User added' : 'Group created'}
             </div>}
-        </>
+        </div>
     );
 }

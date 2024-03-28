@@ -1,11 +1,39 @@
-export default function Message({ msg, user, isGroup }) {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+function Content({ body, mime }) {
+    // console.log(mime);
+    switch (mime[2]) {
+        case 'image':
+            return (<img src={body} />);
+        case 'video':
+            return (
+                <video controls>
+                    <source src={body} />
+                </video>
+            );
+        default:
+            return (<p>Document</p>)
+    }
+}
+
+export default function Message({ msg, user }) {
     const date = new Date(msg.createdAt);
+    const author = user == msg.author;
+    const mime = msg.body.match(/:((.*?)\/.*?);/);
     return (
-        <div className={`flex py-2 ${user == msg.author ? 'justify-end' : ''}`}>
-            <div className="border bg-bg-secondary border-border-primary rounded shadow-md p-2 max-w-[calc(100%-50px)]">
-                {isGroup && <div className="text-sm text-txt-secondary font-semibold">{user == msg.author ? 'You' : msg.author}</div>}
-                <div className="text-txt-primary whitespace-pre-wrap">{msg.body}</div>
-                <div className="text-xs text-txt-tertiary font-semibold ">{date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()}</div>
+        <div className={`flex py-2 ${author ? 'justify-end' : ''}`}>
+            <a href={msg.body} download className={`${!msg.isDocument && 'hidden'} self-start ${author ? 'order-1' : 'order-3'}`}><FontAwesomeIcon icon='fa-solid fa-file-arrow-down' className="w-6 h-6" /></a>
+            <div className="border bg-bg-secondary border-border-primary rounded shadow-md p-2 max-w-[calc(100%-50px)] order-2">
+                <div className="text-sm text-txt-secondary font-semibold pb-2">
+                    {author ? 'You' : msg.author}
+                </div>
+                {
+                    msg.isDocument ? <Content body={msg.body} mime={mime} /> :
+                        <div className="text-txt-primary whitespace-pre-wrap">{msg.body}</div>
+                }
+                <div className="text-xs text-txt-tertiary font-semibold pt-2">
+                    {date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()}
+                </div>
             </div>
         </div>
     );

@@ -36,6 +36,7 @@ export default function Chat({ convo, setContent }) {
         const input = inputRef.current;
         input.style.height = '32px';
         input.style.height = `${Math.min(input.scrollHeight, 96)}px`;
+        setError(false);
     }, [message]);
 
     useEffect(() => {
@@ -43,23 +44,30 @@ export default function Chat({ convo, setContent }) {
     }, [messages]);
 
     useEffect(() => {
+        setLoading(true);
         setMessages([]);
         (async () => {
             const response = await fetch(`/api/msg/${convo._id}`, { headers: { 'Authorization': `Bearer ${token}` } });
             const json = await response.json();
             if (response.ok) setMessages(json);
             else setError(json.error);
+            setLoading(false);
         })();
     }, [convo, token]);
 
-    const sendMessage = async () => {
+    useEffect(() => {
+        if (error)
+            setTimeout(() => setError(null), 3000);
+    }, [error])
+
+    const sendMessage = async (isDocument, message) => {
         setLoading(true);
         const response = await fetch('/api/msg', {
             method: 'POST',
             headers,
             body: JSON.stringify({
                 convo: convo._id,
-                user: username,
+                isDocument,
                 msg: message.trim()
             })
         });
@@ -72,6 +80,20 @@ export default function Chat({ convo, setContent }) {
         } else
             setError(msg.error);
         setLoading(false);
+    };
+
+    const sendFile = (e) => {
+        const file = e.target.files[0];
+        if (file.size > 15000000) {
+            setError('File must be smaller than 15MB');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            // console.log(reader.result);
+            sendMessage(true, reader.result);
+        };
+        reader.readAsDataURL(file);
     };
 
     const delConvo = async () => {
@@ -106,17 +128,25 @@ export default function Chat({ convo, setContent }) {
             </div>
 
             <div className=" flex-grow overflow-x-hidden overflow-y-scroll border-b border-border-primary px-4">
-                {messages.length == 0 && <p>No messages</p>}
-                {messages.map((el) => <Message key={el._id} msg={el} user={username} isGroup={convo.isGroupChat} />)}
+                {messages.length == 0 && (loading ? <p>Loading...</p> : <p>No messages</p>)}
+                {messages.map((el) => <Message key={el._id} msg={el} user={username} />)}
                 <div ref={msgRef}></div>
             </div>
 
             <div className="flex items-center justify-between p-4">
-                <textarea autoFocus ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mr-2 no-scrollbar" />
-                <button onClick={sendMessage} disabled={message.match(/^\s*$/) || loading} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                <div>
+                    <label className="flex justify-center items-center button-icon">
+                        <input type="file" onChange={sendFile} className="hidden" accept="image/*, video/*" disabled={loading} />
+                        <FontAwesomeIcon icon="fa-solid fa-image" className="w-4 h-4" />
+                    </label>
+                </div>
+                <textarea autoFocus ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mx-2 no-scrollbar" />
+                <div>
+                    <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/) || loading} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                </div>
             </div>
 
-            {error && <div className="error mt-2">{error}</div>}
+            {error && <div className="error mx-4 mb-4">{error}</div>}
         </>
     );
 }

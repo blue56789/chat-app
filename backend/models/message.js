@@ -13,6 +13,10 @@ const messageSchema = new Schema(
             ref: 'User',
             required: true
         },
+        isDocument: {
+            type: Boolean,
+            required: true
+        },
         body: {
             type: String,
             required: true
