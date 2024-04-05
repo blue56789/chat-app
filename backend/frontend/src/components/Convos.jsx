@@ -27,11 +27,9 @@ export default function Convos({ setChat, setContent }) {
                                 setContent('chat');
                             }}>
                             <p className="font-semibold">{el.name}</p>
-                            <p className="text-sm text-txt-secondary">
+                            <p className="text-sm text-txt-secondary truncate">
                                 {el.lastMessage ?
-                                    (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' +
-                                    el.lastMessage.body.substring(0, 25) +
-                                    (el.lastMessage.body.length > 25 ? '...' : '') :
+                                    (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' + el.lastMessage.body :
                                     'No messages'}
                             </p>
                         </div>

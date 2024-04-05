@@ -90,7 +90,6 @@ export default function Chat({ convo, setContent }) {
         }
         const reader = new FileReader();
         reader.onloadend = () => {
-            // console.log(reader.result);
             sendMessage(true, reader.result);
         };
         reader.readAsDataURL(file);
@@ -116,7 +115,7 @@ export default function Chat({ convo, setContent }) {
     return (
         <>
             <div className="flex justify-between items-center border-b border-border-primary p-4">
-                <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
+                <button onClick={() => setContent('convos')} className="button-icon sm:hidden"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title mx-4">{name}</span>
                 <span>
                     {convo.isGroupChat ? <>
@@ -135,14 +134,17 @@ export default function Chat({ convo, setContent }) {
 
             <div className="flex items-center justify-between p-4">
                 <div>
-                    <label className="flex justify-center items-center button-icon">
-                        <input type="file" onChange={sendFile} className="hidden" accept="image/*, video/*" disabled={loading} />
-                        <FontAwesomeIcon icon="fa-solid fa-image" className="w-4 h-4" />
+                    <label className="flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-black has-[:enabled]:hover:border-white">
+                        <input type="file" onChange={sendFile} className="hidden peer" disabled={loading} />
+                        <FontAwesomeIcon icon="fa-solid fa-paperclip" className="w-4 h-4" />
                     </label>
                 </div>
-                <textarea autoFocus ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mx-2 no-scrollbar" />
+                <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mx-2 no-scrollbar" />
                 <div>
-                    <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/) || loading} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                    {loading ?
+                        <div className="loader"></div> :
+                        <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/)} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                    }
                 </div>
             </div>
 

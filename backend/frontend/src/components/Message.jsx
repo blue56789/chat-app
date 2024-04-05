@@ -4,15 +4,21 @@ function Content({ body, mime }) {
     // console.log(mime);
     switch (mime[2]) {
         case 'image':
-            return (<img src={body} />);
+            return (<img src={body} loading="lazy" />);
         case 'video':
             return (
                 <video controls>
                     <source src={body} />
                 </video>
             );
+        case 'audio':
+            return (
+                <audio controls>
+                    <source src={body} />
+                </audio>
+            );
         default:
-            return (<p>Document</p>)
+            return (<p>File</p>)
     }
 }
 
