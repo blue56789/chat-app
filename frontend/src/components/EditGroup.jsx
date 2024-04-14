@@ -60,7 +60,7 @@ export default function EditGroup({ setContent, setConvo, convo }) {
                 <span className="title  text-center mx-4">Edit group</span>
                 <div className="w-8"></div>
             </div>
-            <div className="overflow-scroll h-full flex flex-col px-4 py-2 mb-4">
+            <div className="overflow-y-scroll h-full flex flex-col px-4 py-2 mb-4">
                 <p>Edit Group Name:</p>
                 <div>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-input mb-2" />

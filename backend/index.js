@@ -7,7 +7,7 @@ const { Server } = require('socket.io');
 
 //middleware
 app.use(express.json({ limit: '16mb' }));
-app.use(express.static(path.resolve(__dirname, 'frontend', 'dist')))
+app.use(express.static(path.resolve(__dirname, '../frontend', 'dist')))
 
 //routes
 app.use('/user', require('./routers/user'));
