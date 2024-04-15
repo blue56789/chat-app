@@ -24,6 +24,7 @@ const server = app.listen(process.env.PORT, () => {
 });
 
 const io = new Server(server, {
+    maxHttpBufferSize: 1e8,
     pingTimeout: 60000,
     cors: { origin: 'http://localhost:5173' }
 });

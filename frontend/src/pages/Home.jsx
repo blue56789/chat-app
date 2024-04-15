@@ -32,7 +32,8 @@ export default function Home() {
         };
 
         const delConvo = (id) => {
-            setContent('convos');
+            if (chat?._id == id)
+                setContent('convos');
             dispatchConvos({ type: 'del', data: id });
         };
 
@@ -43,7 +44,7 @@ export default function Home() {
             socket.off('messageRecieved', newMsg);
             socket.off('convoDeleted', delConvo);
         };
-    }, [dispatchConvos]);
+    }, [dispatchConvos, chat]);
 
     return (
         <>
