@@ -4,10 +4,12 @@ import Message from "./Message";
 import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Emojis from "./Emojis";
 
 export default function Chat({ convo, setContent }) {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [emoji, setEmoji] = useState(false);
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
     const { username, token } = useAuthContext();
@@ -132,19 +134,30 @@ export default function Chat({ convo, setContent }) {
                 <div ref={msgRef}></div>
             </div>
 
-            <div className="flex items-center justify-between p-4">
-                <div>
-                    <label className="flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-black has-[:enabled]:hover:border-white">
-                        <input type="file" onChange={sendFile} className="hidden peer" disabled={loading} />
-                        <FontAwesomeIcon icon="fa-solid fa-paperclip" className="w-4 h-4" />
-                    </label>
-                </div>
-                <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input resize-none mx-2 no-scrollbar" />
-                <div>
-                    {loading ?
-                        <div className="loader"></div> :
-                        <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/)} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
-                    }
+            <div className="relative">
+                {
+                    emoji &&
+                    <div className="absolute transition-all -top-[13rem] left-4">
+                        <Emojis disabled={loading} onClick={(e) => setMessage(msg => msg + e)} />
+                    </div>
+                }
+                <div className="flex items-center justify-between p-4">
+                    <div className="mr-2">
+                        <label className="flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-black has-[:enabled]:hover:border-white">
+                            <input type="file" onChange={sendFile} className="hidden peer" disabled={loading} />
+                            <FontAwesomeIcon icon="fa-solid fa-paperclip" className="w-4 h-4" />
+                        </label>
+                    </div>
+                    <div className={`${emoji ? "text-blue-500" : ""} size-8 flex justify-center items-center -mr-7 z-[1] hover:cursor-pointer`} onClick={() => setEmoji(e => !e)}>
+                        <FontAwesomeIcon icon="face-grin" />
+                    </div>
+                    <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input pl-7 pt-1 resize-none no-scrollbar" />
+                    <div className="ml-2">
+                        {loading ?
+                            <div className="loader"></div> :
+                            <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/)} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                        }
+                    </div>
                 </div>
             </div>
 
