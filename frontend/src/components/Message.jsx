@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Content({ body, mime }) {
     // console.log(mime);
+    if (mime == null)
+        return (<img src={body} loading="lazy" />);
     switch (mime[2]) {
         case 'image':
             return (<img src={body} loading="lazy" />);
@@ -18,17 +20,20 @@ function Content({ body, mime }) {
                 </audio>
             );
         default:
-            return (<p>File</p>)
+            return (
+                <p>{'File.' + mime[3]}</p>
+                // <embed src={body} type={mime[1]} />
+            )
     }
 }
 
 export default function Message({ msg, user }) {
     const date = new Date(msg.createdAt);
     const author = user == msg.author;
-    const mime = msg.body.match(/:((.*?)\/.*?);/);
+    const mime = msg.body.match(/:((.*?)\/(.*?));/);
     return (
         <div className={`flex py-2 ${author ? 'justify-end' : ''}`}>
-            <a href={msg.body} download className={`${!msg.isDocument && 'hidden'} self-start ${author ? 'order-1' : 'order-3'}`}><FontAwesomeIcon icon='fa-solid fa-file-arrow-down' className="w-6 h-6" /></a>
+            <a href={msg.body} target="_blank" rel="noreferrer" download className={`${!msg.isDocument && 'hidden'} self-start ${author ? 'order-1' : 'order-3'}`}><FontAwesomeIcon icon='fa-solid fa-file-arrow-down' className="w-6 h-6" /></a>
             <div className="border bg-bg-secondary border-border-primary rounded shadow-md p-2 max-w-[calc(100%-50px)] order-2">
                 <div className="text-sm text-txt-secondary font-semibold pb-2">
                     {author ? 'You' : msg.author}

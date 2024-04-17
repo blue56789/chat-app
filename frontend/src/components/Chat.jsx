@@ -5,11 +5,12 @@ import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Emojis from "./Emojis";
+import { Gif } from "./Gif";
 
 export default function Chat({ convo, setContent }) {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const [emoji, setEmoji] = useState(false);
+    const [modal, setModal] = useState('');
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
     const { username, token } = useAuthContext();
@@ -86,8 +87,8 @@ export default function Chat({ convo, setContent }) {
 
     const sendFile = (e) => {
         const file = e.target.files[0];
-        if (file.size > 15000000) {
-            setError('File must be smaller than 15MB');
+        if (file.size > 10000000) {
+            setError('File size must not exceed 10MB');
             return;
         }
         const reader = new FileReader();
@@ -135,23 +136,60 @@ export default function Chat({ convo, setContent }) {
             </div>
 
             <div className="relative">
-                {
-                    emoji &&
-                    <div className="absolute transition-all -top-[13rem] left-4">
+                {{
+                    'file': <div className="absolute flex flex-col gap-2 -top-[11.5rem] left-4 p-2 border border-border-primary rounded-lg bg-bg-tertiary">
+                        <div className="flex justify-start items-center">
+                            <label className="checkbox-button mr-2">
+                                <input type="file" accept="image/*" className="hidden peer" onChange={sendFile} />
+                                <FontAwesomeIcon icon="fa-solid fa-image" />
+                            </label>
+                            Photo
+                        </div>
+                        <div className="flex justify-start items-center">
+                            <label className="checkbox-button mr-2">
+                                <input type="file" accept="video/*" className="hidden peer" onChange={sendFile} />
+                                <FontAwesomeIcon icon="fa-solid fa-film" />
+                            </label>
+                            Video
+                        </div>
+                        <div className="flex justify-start items-center">
+                            <label className="checkbox-button mr-2">
+                                <input type="file" accept="audio/*" className="hidden peer" onChange={sendFile} />
+                                <FontAwesomeIcon icon="fa-solid fa-headphones" />
+                            </label>
+                            Audio
+                        </div>
+                        <div className="flex justify-start items-center">
+                            <label className="checkbox-button mr-2">
+                                <input type="file" accept="*" className="hidden peer" onChange={sendFile} />
+                                <FontAwesomeIcon icon="fa-solid fa-file" />
+                            </label>
+                            Document
+                        </div>
+                    </div>,
+                    'emoji': <div className="absolute -top-[13rem] left-4">
                         <Emojis disabled={loading} onClick={(e) => setMessage(msg => msg + e)} />
+                    </div>,
+                    'gif': <div className="absolute -top-[25rem] left-4">
+                        <Gif onClick={(g) => sendMessage(true, g.media_formats.gif.url)} />
                     </div>
-                }
+                }[modal]}
                 <div className="flex items-center justify-between p-4">
                     <div className="mr-2">
-                        <label className="flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-black has-[:enabled]:hover:border-white">
-                            <input type="file" onChange={sendFile} className="hidden peer" disabled={loading} />
+                        <button className={`button-icon ${modal == 'file' ? 'bg-white text-black' : 'text-white'} disabled:text-txt-tertiary`} disabled={loading} onClick={() => setModal(m => m == 'file' ? '' : 'file')} >
                             <FontAwesomeIcon icon="fa-solid fa-paperclip" className="w-4 h-4" />
-                        </label>
+                        </button>
                     </div>
-                    <div className={`${emoji ? "text-blue-500" : ""} size-8 flex justify-center items-center -mr-7 z-[1] hover:cursor-pointer`} onClick={() => setEmoji(e => !e)}>
-                        <FontAwesomeIcon icon="face-grin" />
+                    <div className="flex items-center justify-between w-full">
+                        <div className={`${modal == 'emoji' ? "text-blue-500" : ""} size-8 flex justify-center items-center -mr-8 z-[1] hover:cursor-pointer`} onClick={() => setModal(m => m == 'emoji' ? '' : 'emoji')}>
+                            <FontAwesomeIcon icon="face-grin" />
+                        </div>
+                        <div className={`${modal == 'gif' ? "text-blue-500" : ""} size-8 flex justify-center items-center -mr-[5.5rem] z-[1] hover:cursor-pointer`} onClick={() => setModal(m => m == 'gif' ? '' : 'gif')}>
+                            {/* <FontAwesomeIcon icon="fa-solid fa-video" /> */}
+                            <span className="font-mono font-extrabold">GIF</span>
+                        </div>
+                        <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input pl-16 py-1 resize-none no-scrollbar" />
                     </div>
-                    <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input pl-7 pt-1 resize-none no-scrollbar" />
                     <div className="ml-2">
                         {loading ?
                             <div className="loader"></div> :

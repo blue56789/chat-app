@@ -24,6 +24,9 @@
     .title {
         @apply font-bold text-2xl;
     }
+    .checkbox-button {
+        @apply flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-black has-[:enabled]:hover:border-white;
+    }
 }
 @layer utilities {
     .no-scrollbar::-webkit-scrollbar {
