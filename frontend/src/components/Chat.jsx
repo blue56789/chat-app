@@ -125,7 +125,7 @@ export default function Chat({ convo, setContent }) {
                 </span>
             </div>
 
-            {messages.length > 0 ? <Messages convo={convo} messages={messages} /> : <p className="h-full">No messages</p>}
+            {messages.length > 0 ? <Messages convo={convo} messages={messages} /> : <p className="h-full p-2">No messages</p>}
 
             <div className="relative">
                 {{
@@ -169,7 +169,7 @@ export default function Chat({ convo, setContent }) {
                         <div className={`${modal == 'gif' ? "text-blue-500" : ""} size-8 flex justify-center items-center -mr-[5.5rem] z-[1] hover:cursor-pointer`} onClick={() => setModal(m => m == 'gif' ? '' : 'gif')}>
                             <span className="font-mono font-extrabold">GIF</span>
                         </div>
-                        <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input pl-16 py-1 resize-none no-scrollbar" />
+                        <textarea ref={inputRef} placeholder="Message" type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input pl-16 py-1 resize-none no-scrollbar" />
                     </div>
                     <div className="ml-2">
                         {loading ?

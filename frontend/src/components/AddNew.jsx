@@ -36,13 +36,13 @@ export default function AddNew({ setContent }) {
                     <button onClick={() => {
                         setAdd(true);
                     }}
-                        className={'h-8 w-full border transition rounded cursor-pointer hover:bg-bg-tertiary mr-1 ' + (add ? 'border-txt-primary' : 'border-txt-tertiary text-txt-tertiary')}>
+                        className={'h-8 w-full border transition rounded-2xl cursor-pointer bg-bg-tertiary hover:border-txt-primary hover:text-txt-primary mr-1 ' + (add ? 'bg-btn-bg-hover text-btn-txt-hover' : 'border-neutral-500 text-neutral-500')}>
                         Contact
                     </button>
                     <button onClick={() => {
                         setAdd(false);
                     }}
-                        className={'h-8 w-full border transition rounded cursor-pointer hover:bg-bg-tertiary ml-1 ' + (add ? 'border-txt-tertiary text-txt-tertiary' : 'border-txt-primary')}>
+                        className={'h-8 w-full border transition rounded-2xl cursor-pointer bg-bg-tertiary hover:border-txt-primary hover:text-txt-primary ml-1 ' + (add ? 'border-neutral-500 text-neutral-500' : 'bg-btn-bg-hover text-btn-txt-hover')}>
                         Group
                     </button>
                 </div>
@@ -53,7 +53,7 @@ export default function AddNew({ setContent }) {
                         <>
                             <p>Group Name:</p>
                             <div>
-                                <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-4" />
+                                <input type="text" onChange={(e) => setGroupName(e.target.value)} value={groupName} className="text-input mb-4" placeholder="Enter group name" />
                             </div>
                             {groupUsers.length > 0 && <>
                                 <p>Group Members:</p>
@@ -63,7 +63,7 @@ export default function AddNew({ setContent }) {
                                             const users = groupUsers.filter((user) => user != el);
                                             setGroupUsers(users);
                                         }}
-                                            className="border border-border-primary rounded hover:bg-bg-tertiary cursor-pointer px-1.5 py-0.5 m-0.5">
+                                            className="border border-border-primary rounded-2xl hover:bg-btn-bg-hover hover:text-btn-txt-hover transition-all cursor-pointer px-2 py-0.5 m-0.5">
                                             {el}
                                         </div>)}
                                 </div> <br />

@@ -31,14 +31,14 @@ export default function AddMembers({ setContent, setConvo, convo }) {
 
     return (
         <>
-            <div className="flex items-center border-b border-border-primary py-2 px-4 mb-2 md:min-w-[500px] justify-between">
+            <div className="flex items-center bg-bg-primary border-b border-border-primary p-4 mb-2 md:min-w-[500px] justify-between">
                 <button onClick={() => setContent('editGroup')}
                     className="button-icon"
                 ><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title  text-center mx-4">Add Members</span>
                 <div className="w-8"></div>
             </div>
-            <div className="flex flex-col grow overflow-scroll px-4 py-2">
+            <div className="flex flex-col grow overflow-x-hidden overflow-y-scroll px-4 py-2">
                 {newMembers.length > 0 && <>
                     <p>New Members:</p>
                     <div className="mb-4 flex flex-wrap">

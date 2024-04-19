@@ -69,7 +69,7 @@ export default function EditGroup({ setContent, setConvo, convo }) {
                 <div className="h-full overflow-scroll px-2 pb-4 no-scrollbar">
                     {groupUsers.map(el =>
                         <label key={el}
-                            className="has-[:checked]:text-txt-tertiary block border-b border-border-primary py-1 px-2 hover:bg-bg-primary transition-all hover:cursor-pointer"
+                            className="has-[:checked]:text-txt-tertiary has-[:checked]:line-through block border-b border-border-primary p-2 hover:bg-bg-primary transition-all hover:cursor-pointer"
                         >
                             <input type="checkbox" checked={delMembers.includes(el)} onChange={(e) => {
                                 if (e.target.checked)
