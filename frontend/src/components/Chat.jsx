@@ -175,7 +175,7 @@ export default function Chat({ convo, setContent }) {
                     <div className="ml-2">
                         {loading ?
                             <div className="loader"></div> :
-                            <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/)} className="button-normal w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
+                            <button onClick={() => sendMessage(false, message)} disabled={message.match(/^\s*$/)} className="button-normal bg-black w-16 h-8 disabled:text-txt-tertiary"><FontAwesomeIcon icon="fa-solid fa-paper-plane" /></button>
                         }
                     </div>
                 </div>

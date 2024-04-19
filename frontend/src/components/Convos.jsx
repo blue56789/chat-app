@@ -29,9 +29,12 @@ export default function Convos({ setChat, setContent }) {
                             <div className="w-full overflow-hidden pr-2" >
                                 <p className="font-semibold">{el.name}</p>
                                 <p className="text-sm font-thin truncate">
-                                    {el.lastMessage ?
-                                        (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' + el.lastMessage.body :
-                                        'No messages'}
+                                    {
+                                        el.lastMessage ?
+                                            (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' +
+                                            (el.lastMessage.isDocument ? el.lastMessage.fileName : el.lastMessage.body) :
+                                            'No messages'
+                                    }
                                 </p>
                             </div>
                             <div className="flex items-center">
