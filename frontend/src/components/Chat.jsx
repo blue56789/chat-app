@@ -58,7 +58,7 @@ export default function Chat({ convo, setContent }) {
             setTimeout(() => setError(null), 3000);
     }, [error])
 
-    const sendMessage = async (isDocument, message) => {
+    const sendMessage = async (isDocument, message, fileName = '') => {
         setLoading(true);
         setModal('');
         const response = await fetch('/api/msg', {
@@ -67,7 +67,8 @@ export default function Chat({ convo, setContent }) {
             body: JSON.stringify({
                 convo: convo._id,
                 isDocument,
-                msg: message.trim()
+                msg: message.trim(),
+                fileName
             })
         });
         const msg = await response.json();
@@ -89,7 +90,7 @@ export default function Chat({ convo, setContent }) {
         }
         const reader = new FileReader();
         reader.onloadend = () => {
-            sendMessage(true, reader.result);
+            sendMessage(true, reader.result, file.name);
         };
         reader.readAsDataURL(file);
     };

@@ -5,29 +5,32 @@ import { Fragment, useEffect, useRef } from "react";
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const isGreaterDate = (date1, date2) => date2.getFullYear() >= date1.getFullYear() && date2.getMonth() >= date1.getMonth() && date2.getDate() > date1.getDate();
 
-function Content({ body, mime }) {
+function Content({ msg, mime }) {
     // console.log(mime);
     if (mime == null)
-        return (<img className="max-h-96" src={body} loading="lazy" />);
+        return (<img className="max-h-96" src={msg.body} loading="lazy" />);
     switch (mime[2]) {
         case 'image':
-            return (<img className="max-h-96" src={body} loading="lazy" />);
+            return (<img className="max-h-96" src={msg.body} loading="lazy" />);
         case 'video':
             return (
                 <video className="max-h-96" controls>
-                    <source src={body} />
+                    <source src={msg.body} />
                 </video>
             );
         case 'audio':
             return (
                 <audio controls>
-                    <source src={body} />
+                    <source src={msg.body} />
                 </audio>
             );
         default:
             return (
-                <div className="mx-2 my-1 text-txt-primary whitespace-pre-wrap">
-                    {'File.' + mime[3]}
+                <div className="flex items-center justify-center mx-4 my-1 text-txt-primary font-mono overflow-hidden whitespace-pre-wrap">
+                    {msg.fileName || 'Document'}
+                    <a href={msg.body} target="_blank" rel="noreferrer" className="flex items-center" download={msg.fileName}>
+                        <FontAwesomeIcon icon='fa-solid fa-download' className="size-6 ml-4" />
+                    </a>
                 </div>
                 // <embed src={body} type={mime[1]} />
             )
@@ -65,12 +68,9 @@ export default function Messages({ convo, messages }) {
                             </div>
                         }
                         <div className={`flex my-1 ${author ? 'justify-end' : ''}`}>
-                            <a href={m.body} target="_blank" rel="noreferrer" download className={`${!m.isDocument && 'hidden'} self-start ${author ? 'order-1' : 'order-3'}`}>
-                                <FontAwesomeIcon icon='fa-solid fa-circle-down' className="w-6 h-6" />
-                            </a>
                             <div className={`flex flex-col max-w-[calc(100%-50px)] ${author ? 'items-end' : ''} order-2`}>
                                 <div className="flex items-end max-w-full border border-border-primary rounded-2xl overflow-hidden bg-bg-primary">
-                                    {m.isDocument ? <Content body={m.body} mime={mime} /> :
+                                    {m.isDocument ? <Content msg={m} mime={mime} /> :
                                         <div className="mx-2 my-1 flex-grow overflow-hidden text-txt-primary whitespace-pre-wrap">
                                             {m.body}
                                         </div>}

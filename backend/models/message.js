@@ -17,6 +17,9 @@ const messageSchema = new Schema(
             type: Boolean,
             required: true
         },
+        fileName: {
+            type: String
+        },
         body: {
             type: String,
             required: true
