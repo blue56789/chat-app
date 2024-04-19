@@ -23,15 +23,34 @@ const server = app.listen(process.env.PORT, () => {
     console.log('Server listening on port', process.env.PORT);
 });
 
+const onlineUsers = new Set();
+
 const io = new Server(server, {
     maxHttpBufferSize: 1e8,
     pingTimeout: 60000,
+    connectionStateRecovery: {},
     cors: { origin: 'http://localhost:5173' }
 });
 io.on('connection', (socket) => {
     socket.on('setup', (username) => {
         // console.log(`Setup ${username}`);
         socket.join(username);
+    });
+    socket.on('notifyOnline', (username, users) => {
+        onlineUsers.add(username);
+        users.forEach((u) => {
+            socket.in(u).emit('notifyOnline', username);
+            if (onlineUsers.has(u))
+                socket.emit('notifyOnline', u);
+        })
+        // console.log(onlineUsers, 'online');
+    });
+    socket.on('notifyOffline', (username, users) => {
+        onlineUsers.delete(username);
+        users.forEach((u) => {
+            socket.in(u).emit('notifyOffline', username)
+        })
+        // console.log(onlineUsers, 'offline');
     });
     socket.on('newMessage', (msg, convo) => {
         // console.log(`Message ${msg.body}`);

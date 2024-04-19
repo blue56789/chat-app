@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useAuthContext from "../hooks/useAuthContext";
 import Convos from "../components/Convos";
 import Chat from "../components/Chat";
@@ -12,7 +12,8 @@ import AddMembers from "../components/AddMembers";
 
 export default function Home() {
     const { username, dispatch } = useAuthContext();
-    const { dispatchConvos } = useConvoContext();
+    const { convos, setOnlineUsers, dispatchConvos } = useConvoContext();
+    const users = useMemo(() => convos.filter((e) => !e.isGroupChat).map((e) => e.users[0] == username ? e.users[1] : e.users[0]), [convos, username]);
 
     const [chat, setChat] = useState(null);
     const [content, setContent] = useState('convos');
@@ -25,6 +26,36 @@ export default function Home() {
     useEffect(() => {
         socket.emit('setup', username);
     }, [username]);
+
+    useEffect(() => {
+        const setOnline = (user) => {
+            setOnlineUsers(o => {
+                // console.log('setonline', user);
+                if (!o.includes(user))
+                    return [...o, user];
+                return o;
+            });
+        };
+        socket.on('notifyOnline', setOnline);
+        const setOffline = (user) => {
+            setOnlineUsers(o => {
+                // console.log('setoffline', user);
+                return o.filter(u => u != user)
+            });
+        }
+        socket.on('notifyOffline', setOffline);
+        return () => {
+            socket.off('notifyOnline', setOnline);
+            socket.off('notifyOffline', setOffline);
+        };
+    }, [setOnlineUsers]);
+
+    useEffect(() => {
+        socket.emit('notifyOnline', username, users);
+        const notifyOffline = () => socket.emit('notifyOffline', username, users);
+        window.addEventListener('beforeunload', notifyOffline);
+        return () => window.removeEventListener('beforeunload', notifyOffline);
+    }, [convos, username, users]);
 
     useEffect(() => {
         const newMsg = (msg, convo) => {
@@ -46,6 +77,11 @@ export default function Home() {
         };
     }, [dispatchConvos, chat]);
 
+    const logout = () => {
+        socket.emit('notifyOffline', username, users);
+        dispatch({ type: 'LOGOUT' });
+    }
+
     return (
         <>
             <div className="flex h-full w-full overflow-hidden transition-all">
@@ -56,7 +92,7 @@ export default function Home() {
                             <button className="button-icon" onClick={() => setContent('add')}>
                                 <FontAwesomeIcon icon="fa-solid fa-plus" />
                             </button>
-                            <button className="button-normal ml-2" onClick={() => { dispatch({ type: 'LOGOUT' }) }}>Logout</button>
+                            <button className="button-normal ml-2" onClick={logout}>Logout</button>
                         </span>
                     </div>
                     <Convos setChat={setChat} setContent={setContent} />

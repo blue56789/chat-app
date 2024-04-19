@@ -4,7 +4,7 @@ import useConvoContext from "../hooks/useConvoContext";
 
 export default function Convos({ setChat, setContent }) {
     const { username } = useAuthContext();
-    const { convos, error } = useConvoContext();
+    const { convos, onlineUsers, error } = useConvoContext();
     const [search, setSearch] = useState('');
     const filteredConvos = useMemo(() => convos.filter((el) => {
         const name = el.isGroupChat ? el.name : (el.users[0] == username ? el.users[1] : el.users[0]);
@@ -33,6 +33,10 @@ export default function Convos({ setChat, setContent }) {
                                         (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' + el.lastMessage.body :
                                         'No messages'}
                                 </p>
+                            </div>
+                            <div className="flex items-center">
+                                {!el.isGroupChat &&
+                                    <span className={`size-2 rounded-full transition-all duration-500 ${onlineUsers.includes(el.name) ? 'bg-green-500' : 'bg-bg-secondary'}`}></span>}
                             </div>
                         </div>
                     );

@@ -34,6 +34,7 @@ function reducer(convos, action) {
 export const ConvoContextProvider = ({ children }) => {
     const [convos, dispatchConvos] = useReducer(reducer, []);
     const [error, setError] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
     const { token } = useAuthContext();
 
     useEffect(() => {
@@ -52,7 +53,7 @@ export const ConvoContextProvider = ({ children }) => {
     }, [token]);
 
     return (
-        <ConvoContext.Provider value={{ convos, error, dispatchConvos }}>
+        <ConvoContext.Provider value={{ convos, error, onlineUsers, setOnlineUsers, dispatchConvos }}>
             {children}
         </ConvoContext.Provider>
     );
