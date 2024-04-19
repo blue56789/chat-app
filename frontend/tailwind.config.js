@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
+import defaultTheme from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
 export default {
     content: [
         "./index.html",
@@ -12,15 +12,16 @@ export default {
                 nunito: ['Nunito', ...defaultTheme.fontFamily.sans]
             },
             colors: {
-                'txt-primary': 'white',
-                'txt-secondary': colors.neutral[300],
-                'txt-tertiary': colors.neutral[500],
-                'border-primary': colors.neutral[500],
-                'bg-primary': 'black',
-                'bg-secondary': colors.neutral[900],
+                'txt-primary': colors.neutral[50],
+                'txt-secondary': colors.neutral[200],
+                'txt-tertiary': colors.neutral[300],
+                'border-primary': colors.neutral[600],
+                'bg-primary': colors.neutral[800],
+                'bg-secondary': colors.neutral[950],
                 'bg-tertiary': colors.neutral[700],
                 'btn-bg': 'black',
-                'btn-bg-hover': 'white'
+                'btn-bg-hover': 'white',
+                'btn-txt-hover': colors.neutral[900]
             },
             backgroundImage: {
                 'main-bg-image': "url('/res/chat_bubble_pattern.png')"

@@ -16,10 +16,10 @@ export function Gif({ onClick }) {
             setResult(json);
     };
     return (
-        <div className="transition-all flex flex-col gap-2 p-2 w-64 h-96 border border-border-primary rounded-lg bg-bg-tertiary">
+        <div className="transition-all flex flex-col gap-2 p-2 w-64 h-96 border border-border-primary rounded-lg bg-bg-primary">
             <form className="flex">
                 <input type="text" className="bg-bg-secondary rounded-lg w-full px-1 outline-none" placeholder="Search Tenor" value={query} onChange={(e) => setQuery(e.target.value)} />
-                <button onClick={search} type="submit" className="-ml-6 hover:bg-black px-1 rounded-lg">
+                <button onClick={search} type="submit" className="-ml-6 hover:bg-bg-tertiary px-1 rounded-lg">
                     <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
                 </button>
             </form>

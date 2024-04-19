@@ -14,24 +14,26 @@ export default function Convos({ setChat, setContent }) {
 
     return (
         <>
-            <div className="p-4 border-b border-b-txt-tertiary">
+            <div className="px-2 pb-2">
                 <input className="text-input" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search Contacts" />
             </div>
             <div className="overflow-scroll no-scrollbar mb-1">
                 {filteredConvos.map(el => {
                     return (
                         <div key={el._id}
-                            className="border-b border-border-primary py-2 px-4 hover:bg-bg-secondary cursor-pointer transition-all"
+                            className="flex justify-between items-center py-2 px-4 border-b border-border-primary hover:bg-btn-bg-hover hover:text-btn-txt-hover cursor-pointer transition-all"
                             onClick={() => {
                                 setChat(el);
                                 setContent('chat');
                             }}>
-                            <p className="font-semibold">{el.name}</p>
-                            <p className="text-sm text-txt-secondary truncate">
-                                {el.lastMessage ?
-                                    (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' + el.lastMessage.body :
-                                    'No messages'}
-                            </p>
+                            <div className="w-full overflow-hidden pr-2" >
+                                <p className="font-semibold">{el.name}</p>
+                                <p className="text-sm font-thin truncate">
+                                    {el.lastMessage ?
+                                        (el.lastMessage.author == username ? 'You' : el.lastMessage.author) + ': ' + el.lastMessage.body :
+                                        'No messages'}
+                                </p>
+                            </div>
                         </div>
                     );
                 })}

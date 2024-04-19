@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import useAuthContext from "../hooks/useAuthContext";
-import Message from "./Message";
 import socket from "../socket";
 import useConvoContext from "../hooks/useConvoContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Emojis from "./Emojis";
 import { Gif } from "./Gif";
+import Messages from "./Messages";
 
 export default function Chat({ convo, setContent }) {
     const [message, setMessage] = useState('');
@@ -65,6 +65,7 @@ export default function Chat({ convo, setContent }) {
 
     const sendMessage = async (isDocument, message) => {
         setLoading(true);
+        setModal('');
         const response = await fetch('/api/msg', {
             method: 'POST',
             headers,
@@ -117,7 +118,7 @@ export default function Chat({ convo, setContent }) {
 
     return (
         <>
-            <div className="flex justify-between items-center border-b border-border-primary p-4">
+            <div className="flex justify-between items-center bg-bg-primary border-b border-border-primary p-4">
                 <button onClick={() => setContent('convos')} className="button-icon sm:hidden"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
                 <span className="title mx-4">{name}</span>
                 <span>
@@ -129,43 +130,32 @@ export default function Chat({ convo, setContent }) {
                 </span>
             </div>
 
-            <div className=" flex-grow overflow-x-hidden overflow-y-scroll border-b border-border-primary px-4">
+            <Messages convo={convo} messages={messages} />
+            {/* <div className=" flex-grow overflow-x-hidden overflow-y-scroll border-b border-border-primary px-4">
                 {messages.length == 0 && (loading ? <p>Loading...</p> : <p>No messages</p>)}
                 {messages.map((el) => <Message key={el._id} msg={el} user={username} />)}
                 <div ref={msgRef}></div>
-            </div>
+            </div> */}
 
             <div className="relative">
                 {{
-                    'file': <div className="absolute flex flex-col gap-2 -top-[11.5rem] left-4 p-2 border border-border-primary rounded-lg bg-bg-tertiary">
-                        <div className="flex justify-start items-center">
-                            <label className="checkbox-button mr-2">
-                                <input type="file" accept="image/*" className="hidden peer" onChange={sendFile} />
-                                <FontAwesomeIcon icon="fa-solid fa-image" />
-                            </label>
-                            Photo
-                        </div>
-                        <div className="flex justify-start items-center">
-                            <label className="checkbox-button mr-2">
-                                <input type="file" accept="video/*" className="hidden peer" onChange={sendFile} />
-                                <FontAwesomeIcon icon="fa-solid fa-film" />
-                            </label>
-                            Video
-                        </div>
-                        <div className="flex justify-start items-center">
-                            <label className="checkbox-button mr-2">
-                                <input type="file" accept="audio/*" className="hidden peer" onChange={sendFile} />
-                                <FontAwesomeIcon icon="fa-solid fa-headphones" />
-                            </label>
-                            Audio
-                        </div>
-                        <div className="flex justify-start items-center">
-                            <label className="checkbox-button mr-2">
-                                <input type="file" accept="*" className="hidden peer" onChange={sendFile} />
-                                <FontAwesomeIcon icon="fa-solid fa-file" />
-                            </label>
-                            Document
-                        </div>
+                    'file': <div className="absolute flex flex-col gap-2 -top-[11.5rem] left-4 p-2 border border-border-primary rounded-lg bg-bg-primary">
+                        {
+                            [
+                                { id: 1, icon: "fa-solid fa-image", text: "Photo", accept: "image/*" },
+                                { id: 2, icon: "fa-solid fa-film", text: "Video", accept: "video/*" },
+                                { id: 3, icon: "fa-solid fa-headphones", text: "Audio", accept: "audio/*" },
+                                { id: 4, icon: "fa-solid fa-file", text: "Document", accept: "*" },
+                            ].map((e) =>
+                                <div key={e.id} className="flex justify-start items-center">
+                                    <label className="checkbox-button mr-2">
+                                        <input type="file" accept={e.accept} className="hidden peer" onChange={sendFile} />
+                                        <FontAwesomeIcon icon={e.icon} />
+                                    </label>
+                                    {e.text}
+                                </div>
+                            )
+                        }
                     </div>,
                     'emoji': <div className="absolute -top-[13rem] left-4">
                         <Emojis disabled={loading} onClick={(e) => setMessage(msg => msg + e)} />
@@ -174,9 +164,9 @@ export default function Chat({ convo, setContent }) {
                         <Gif onClick={(g) => sendMessage(true, g.media_formats.gif.url)} />
                     </div>
                 }[modal]}
-                <div className="flex items-center justify-between p-4">
+                <div className="flex items-center justify-between p-4 border-t border-border-primary bg-bg-primary">
                     <div className="mr-2">
-                        <button className={`button-icon ${modal == 'file' ? 'bg-white text-black' : 'text-white'} disabled:text-txt-tertiary`} disabled={loading} onClick={() => setModal(m => m == 'file' ? '' : 'file')} >
+                        <button className={`button-icon ${modal == 'file' ? 'bg-btn-bg-hover text-btn-txt-hover' : 'text-txt-primary'} disabled:text-txt-tertiary`} disabled={loading} onClick={() => setModal(m => m == 'file' ? '' : 'file')} >
                             <FontAwesomeIcon icon="fa-solid fa-paperclip" className="w-4 h-4" />
                         </button>
                     </div>
@@ -185,7 +175,6 @@ export default function Chat({ convo, setContent }) {
                             <FontAwesomeIcon icon="face-grin" />
                         </div>
                         <div className={`${modal == 'gif' ? "text-blue-500" : ""} size-8 flex justify-center items-center -mr-[5.5rem] z-[1] hover:cursor-pointer`} onClick={() => setModal(m => m == 'gif' ? '' : 'gif')}>
-                            {/* <FontAwesomeIcon icon="fa-solid fa-video" /> */}
                             <span className="font-mono font-extrabold">GIF</span>
                         </div>
                         <textarea ref={inputRef} type="text" value={message} onChange={(e) => setMessage(e.target.value)} className="text-input pl-16 py-1 resize-none no-scrollbar" />

@@ -4,7 +4,7 @@
 @tailwind utilities;
 @layer components {
     .text-input {
-        @apply border border-border-primary rounded px-1 w-full bg-bg-primary focus:outline-none h-8;
+        @apply border border-border-primary rounded-2xl px-4 w-full bg-bg-tertiary focus:outline-none h-8;
     }
     .error {
         @apply border-2 border-red-500 text-red-500 rounded-md px-2 py-1;
@@ -13,10 +13,10 @@
         @apply border-2 border-green-500 text-green-500 rounded-md px-2 py-1;
     }
     .button-normal {
-        @apply border  border-border-primary enabled:hover:bg-btn-bg-hover enabled:hover:text-black enabled:hover:border-white font-semibold cursor-pointer rounded-full h-8 px-2 disabled:cursor-default tracking-wide transition-all;
+        @apply border bg-bg-tertiary border-border-primary enabled:hover:bg-btn-bg-hover enabled:hover:text-btn-txt-hover enabled:hover:border-white font-semibold cursor-pointer rounded-full h-8 px-2 disabled:cursor-default tracking-wide transition-all;
     }
     .button-icon {
-        @apply cursor-pointer border  border-border-primary enabled:hover:bg-btn-bg-hover enabled:hover:text-black enabled:hover:border-white rounded-full w-8 h-8 disabled:cursor-default transition-all;
+        @apply cursor-pointer border bg-bg-tertiary border-border-primary enabled:hover:bg-btn-bg-hover enabled:hover:text-btn-txt-hover enabled:hover:border-white rounded-full w-8 h-8 disabled:cursor-default transition-all;
     }
     .loader {
         @apply w-8 h-8 border-2 border-white border-b-transparent rounded-full animate-spin;
@@ -25,7 +25,7 @@
         @apply font-bold text-2xl;
     }
     .checkbox-button {
-        @apply flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-black has-[:enabled]:hover:border-white;
+        @apply flex justify-center items-center button-icon has-[:disabled]:text-txt-tertiary has-[:disabled]:cursor-default has-[:enabled]:hover:bg-btn-bg-hover has-[:enabled]:hover:text-btn-txt-hover has-[:enabled]:hover:border-white;
     }
 }
 @layer utilities {

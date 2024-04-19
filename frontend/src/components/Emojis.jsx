@@ -9,7 +9,7 @@ export default function Emojis({ onClick }) {
         return reg.test(e.name) || reg.test(e.category)
     }), [query]);
     return (
-        <div className="transition-all flex flex-col gap-2 p-2 w-64 h-48 border border-border-primary rounded-lg bg-bg-tertiary">
+        <div className="transition-all flex flex-col gap-2 p-2 w-64 h-48 border border-border-primary rounded-lg bg-bg-primary">
             <div>
                 <input type="text" className="bg-bg-secondary rounded-lg w-full px-1 outline-none" placeholder="Search emoji" value={query} onChange={(e) => setQuery(e.target.value)} />
             </div>

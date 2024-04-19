@@ -25,7 +25,7 @@ function Authentication({ method, setMethod }) {
 
     return (
         <form
-            className="flex flex-col border bg-[rgba(0,0,0,0.25)] backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 transition-all"
+            className="flex flex-col border bg-bg-primary backdrop-blur-[2px] border-border-primary p-4 rounded-lg w-72 transition-all"
             onSubmit={submit}
         >
             <h1 className="title text-center mb-4">{method}</h1>
@@ -72,7 +72,7 @@ function Authentication({ method, setMethod }) {
                 </label>
             }
 
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-center my-4">
                 {isLoading ?
                     <div className="loader"></div> :
                     <input
@@ -86,7 +86,7 @@ function Authentication({ method, setMethod }) {
             <div className="text-center">
                 {method == 'Login' ? 'Don\'t have an account? ' : 'Already have an account? '}
                 <a onClick={() => setMethod(alt)}
-                    className="text-blue-600 underline hover:cursor-pointer active:text-blue-800">
+                    className="text-blue-500 underline hover:cursor-pointer active:text-blue-800">
                     {alt}
                 </a>
             </div>

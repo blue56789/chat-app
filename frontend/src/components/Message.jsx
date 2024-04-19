@@ -34,7 +34,7 @@ export default function Message({ msg, user }) {
     return (
         <div className={`flex py-2 ${author ? 'justify-end' : ''}`}>
             <a href={msg.body} target="_blank" rel="noreferrer" download className={`${!msg.isDocument && 'hidden'} self-start ${author ? 'order-1' : 'order-3'}`}><FontAwesomeIcon icon='fa-solid fa-file-arrow-down' className="w-6 h-6" /></a>
-            <div className="border bg-bg-secondary border-border-primary rounded shadow-md p-2 max-w-[calc(100%-50px)] order-2">
+            <div className="border bg-bg-primary border-border-primary rounded-lg shadow-md p-2 max-w-[calc(100%-50px)] order-2">
                 <div className="text-sm text-txt-secondary font-semibold pb-2">
                     {author ? 'You' : msg.author}
                 </div>

@@ -53,7 +53,7 @@ export default function EditGroup({ setContent, setConvo, convo }) {
 
     return (
         <>
-            <div className="flex items-center border-b border-border-primary p-4 mb-2 md:min-w-[500px] justify-between">
+            <div className="flex items-center border-b border-border-primary bg-bg-primary p-4 mb-2 md:min-w-[500px] justify-between">
                 <button onClick={() => setContent('chat')}
                     className="button-icon"
                 ><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
@@ -69,7 +69,7 @@ export default function EditGroup({ setContent, setConvo, convo }) {
                 <div className="h-full overflow-scroll px-2 pb-4 no-scrollbar">
                     {groupUsers.map(el =>
                         <label key={el}
-                            className="has-[:checked]:text-txt-tertiary block border-b border-border-primary py-1 px-2 hover:bg-bg-secondary transition-all hover:cursor-pointer"
+                            className="has-[:checked]:text-txt-tertiary block border-b border-border-primary py-1 px-2 hover:bg-bg-primary transition-all hover:cursor-pointer"
                         >
                             <input type="checkbox" checked={delMembers.includes(el)} onChange={(e) => {
                                 if (e.target.checked)
