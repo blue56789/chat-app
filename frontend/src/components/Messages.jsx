@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthContext from "../hooks/useAuthContext";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const isGreaterDate = (date1, date2) => date2.getFullYear() >= date1.getFullYear() && date2.getMonth() >= date1.getMonth() && date2.getDate() > date1.getDate();
@@ -36,9 +36,21 @@ function Content({ body, mime }) {
 
 export default function Messages({ convo, messages }) {
     const { username } = useAuthContext();
+    const msgRef = useRef(null);
+
+    useEffect(() => msgRef.current?.scrollIntoView(), [convo]);
+
+    useEffect(() => {
+        const div = msgRef.current;
+        if (div == null) return;
+        const { top, left, bottom, right } = div.getBoundingClientRect();
+        const { innerHeight, innerWidth } = window;
+        if (top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth)
+            div.scrollIntoView();
+    }, [messages])
+
     return (
-        <div className="flex-grow overflow-x-hidden overflow-y-scroll px-4 py-2">
-            {messages.length == 0 && <p>No messages</p>}
+        <div className="flex flex-col flex-grow overflow-x-hidden overflow-y-scroll px-4 pt-2">
             {messages.map((m, i) => {
                 const date = new Date(m.createdAt);
                 const author = username == m.author;
@@ -78,6 +90,7 @@ export default function Messages({ convo, messages }) {
                 )
 
             })}
+            <div ref={msgRef} className="h-2"></div>
         </div>
     );
 }

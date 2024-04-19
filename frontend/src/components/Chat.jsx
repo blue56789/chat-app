@@ -15,7 +15,6 @@ export default function Chat({ convo, setContent }) {
     const [error, setError] = useState(null);
     const { username, token } = useAuthContext();
     const { dispatchConvos } = useConvoContext();
-    const msgRef = useRef(null);
     const inputRef = useRef(null);
     const name = convo.isGroupChat ? convo.name : (convo.users[0] == username ? convo.users[1] : convo.users[0])
 
@@ -41,10 +40,6 @@ export default function Chat({ convo, setContent }) {
         input.style.height = `${Math.min(input.scrollHeight, 96)}px`;
         setError(false);
     }, [message]);
-
-    useEffect(() => {
-        msgRef.current?.scrollIntoView();
-    }, [messages]);
 
     useEffect(() => {
         setLoading(true);
@@ -130,12 +125,7 @@ export default function Chat({ convo, setContent }) {
                 </span>
             </div>
 
-            <Messages convo={convo} messages={messages} />
-            {/* <div className=" flex-grow overflow-x-hidden overflow-y-scroll border-b border-border-primary px-4">
-                {messages.length == 0 && (loading ? <p>Loading...</p> : <p>No messages</p>)}
-                {messages.map((el) => <Message key={el._id} msg={el} user={username} />)}
-                <div ref={msgRef}></div>
-            </div> */}
+            {messages.length > 0 ? <Messages convo={convo} messages={messages} /> : <p className="h-full">No messages</p>}
 
             <div className="relative">
                 {{
@@ -148,11 +138,13 @@ export default function Chat({ convo, setContent }) {
                                 { id: 4, icon: "fa-solid fa-file", text: "Document", accept: "*" },
                             ].map((e) =>
                                 <div key={e.id} className="flex justify-start items-center">
-                                    <label className="checkbox-button mr-2">
-                                        <input type="file" accept={e.accept} className="hidden peer" onChange={sendFile} />
-                                        <FontAwesomeIcon icon={e.icon} />
+                                    <label className="flex items-center hover:cursor-pointer group">
+                                        <label className="checkbox-button group-hover:bg-btn-bg-hover group-hover:text-btn-txt-hover mr-2">
+                                            <input type="file" accept={e.accept} className="hidden peer" onChange={sendFile} />
+                                            <FontAwesomeIcon icon={e.icon} />
+                                        </label>
+                                        {e.text}
                                     </label>
-                                    {e.text}
                                 </div>
                             )
                         }
