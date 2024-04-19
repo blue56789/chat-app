@@ -69,9 +69,9 @@ export default function Messages({ convo, messages }) {
                                 <FontAwesomeIcon icon='fa-solid fa-circle-down' className="w-6 h-6" />
                             </a>
                             <div className={`flex flex-col max-w-[calc(100%-50px)] ${author ? 'items-end' : ''} order-2`}>
-                                <div className="flex items-end border border-border-primary rounded-2xl overflow-hidden bg-bg-primary">
+                                <div className="flex items-end max-w-full border border-border-primary rounded-2xl overflow-hidden bg-bg-primary">
                                     {m.isDocument ? <Content body={m.body} mime={mime} /> :
-                                        <div className="mx-2 my-1 text-txt-primary whitespace-pre-wrap">
+                                        <div className="mx-2 my-1 flex-grow overflow-hidden text-txt-primary whitespace-pre-wrap">
                                             {m.body}
                                         </div>}
                                     {!m.isDocument && <div className={`mx-2 text-xs font-thin`}>

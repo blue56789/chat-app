@@ -20,7 +20,6 @@ export default function Home() {
 
     useEffect(() => {
         socket.connect();
-        return () => socket.disconnect();
     }, []);
 
     useEffect(() => {

@@ -23,7 +23,7 @@ const server = app.listen(process.env.PORT, () => {
     console.log('Server listening on port', process.env.PORT);
 });
 
-const onlineUsers = new Set();
+const onlineUsers = new Map();
 
 const io = new Server(server, {
     maxHttpBufferSize: 1e8,
@@ -33,13 +33,12 @@ const io = new Server(server, {
 });
 io.on('connection', (socket) => {
     socket.on('setup', (username) => {
-        // console.log(`Setup ${username}`);
-        socket.join(username);
+        onlineUsers.set(username, socket.id);
     });
     socket.on('notifyOnline', (username, users) => {
-        onlineUsers.add(username);
+        // onlineUsers.add(username);
         users.forEach((u) => {
-            socket.in(u).emit('notifyOnline', username);
+            socket.to(onlineUsers.get(u)).emit('notifyOnline', username);
             if (onlineUsers.has(u))
                 socket.emit('notifyOnline', u);
         })
@@ -48,7 +47,7 @@ io.on('connection', (socket) => {
     socket.on('notifyOffline', (username, users) => {
         onlineUsers.delete(username);
         users.forEach((u) => {
-            socket.in(u).emit('notifyOffline', username)
+            socket.to(onlineUsers.get(u)).emit('notifyOffline', username)
         })
         // console.log(onlineUsers, 'offline');
     });
@@ -56,12 +55,12 @@ io.on('connection', (socket) => {
         // console.log(`Message ${msg.body}`);
         convo.lastMessage = msg;
         convo.users.forEach(user => {
-            socket.in(user).emit('messageRecieved', msg, convo);
+            socket.to(onlineUsers.get(user)).emit('messageRecieved', msg, convo);
         });
     });
     socket.on('delConvo', (convo) => {
         convo.users.forEach(user => {
-            socket.in(user).emit('convoDeleted', convo._id);
+            socket.to(onlineUsers.get(user)).emit('convoDeleted', convo._id);
         });
     });
 });
