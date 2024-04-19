@@ -3,7 +3,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import { Fragment } from "react";
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const isGreaterDate = (date1, date2) => date2.getFullYear() > date1.getFullYear() || date2.getMonth() > date1.getMonth() || date2.getDate() > date1.getDate();
+const isGreaterDate = (date1, date2) => date2.getFullYear() >= date1.getFullYear() && date2.getMonth() >= date1.getMonth() && date2.getDate() > date1.getDate();
 
 function Content({ body, mime }) {
     // console.log(mime);

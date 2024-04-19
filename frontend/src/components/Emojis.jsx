@@ -13,7 +13,7 @@ export default function Emojis({ onClick }) {
             <div>
                 <input type="text" className="bg-bg-secondary rounded-lg w-full px-1 outline-none" placeholder="Search emoji" value={query} onChange={(e) => setQuery(e.target.value)} />
             </div>
-            <div className="flex flex-wrap w-full h-full content-start overflow-y-scroll">
+            <div className="flex flex-wrap w-full h-full content-start overflow-y-scroll no-scrollbar">
                 {filteredEmojis.map((e) => <div key={e.char} className="text-xl w-8 h-8 flex justify-center items-center hover:cursor-pointer hover:bg-bg-secondary rounded-md transition-all" onClick={() => onClick(e.char)} onMouseEnter={() => setHoveredEmoji(e)} onMouseLeave={() => setHoveredEmoji(null)} >{e.char}</div>)}
             </div>
             <div>

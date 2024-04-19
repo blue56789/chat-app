@@ -23,7 +23,7 @@ export function Gif({ onClick }) {
                     <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
                 </button>
             </form>
-            <div className="flex flex-wrap w-full h-full content-start overflow-y-scroll">
+            <div className="flex flex-wrap w-full h-full content-start overflow-y-scroll no-scrollbar">
                 {result.length == 0 && <p>No results</p>}
                 {result.map((g) => {
                     return <img key={g.id} src={g.media_formats.nanogif.url} onClick={() => onClick(g)} className="max-w-32 border border-border-primary rounded-lg m-2 hover:cursor-pointer" />;
