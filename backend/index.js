@@ -23,7 +23,8 @@ const server = app.listen(process.env.PORT, () => {
     console.log('Server listening on port', process.env.PORT);
 });
 
-const onlineUsers = new Map();
+const idMap = new Map();
+const userMap = new Map();
 
 const io = new Server(server, {
     maxHttpBufferSize: 1e8,
@@ -33,34 +34,46 @@ const io = new Server(server, {
 });
 io.on('connection', (socket) => {
     socket.on('setup', (username) => {
-        onlineUsers.set(username, socket.id);
+        idMap.set(username, socket.id);
+        userMap.set(socket.id, username);
     });
-    socket.on('notifyOnline', (username, users) => {
-        // onlineUsers.add(username);
-        users.forEach((u) => {
-            socket.to(onlineUsers.get(u)).emit('notifyOnline', username);
-            if (onlineUsers.has(u))
+    socket.on('subscribe', (users) => {
+        users.forEach(u => {
+            socket.join(u);
+            if (idMap.has(u)) {
                 socket.emit('notifyOnline', u);
-        })
-        // console.log(onlineUsers, 'online');
+                // console.log(userMap.get(socket.id), 'asked for', u);
+            }
+        });
+    })
+    socket.on('notifyOnline', () => {
+        const user = userMap.get(socket.id)
+        socket.in(user).emit('notifyOnline', user);
+        // console.log(idMap, 'online');
     });
-    socket.on('notifyOffline', (username, users) => {
-        onlineUsers.delete(username);
-        users.forEach((u) => {
-            socket.to(onlineUsers.get(u)).emit('notifyOffline', username)
-        })
-        // console.log(onlineUsers, 'offline');
+    socket.on('notifyOffline', () => {
+        const user = userMap.get(socket.id)
+        socket.in(user).emit('notifyOffline', user);
+        userMap.delete(socket.id);
+        idMap.delete(user);
+        // console.log(idMap, 'offline');
     });
     socket.on('newMessage', (msg, convo) => {
         // console.log(`Message ${msg.body}`);
         convo.lastMessage = msg;
         convo.users.forEach(user => {
-            socket.to(onlineUsers.get(user)).emit('messageRecieved', msg, convo);
+            socket.to(idMap.get(user)).emit('messageRecieved', msg, convo);
         });
     });
     socket.on('delConvo', (convo) => {
         convo.users.forEach(user => {
-            socket.to(onlineUsers.get(user)).emit('convoDeleted', convo._id);
+            socket.to(idMap.get(user)).emit('convoDeleted', convo._id);
         });
     });
+    socket.on('disconnect', () => {
+        const user = userMap.get(socket.id);
+        socket.in(user).emit('notifyOffline', user);
+        userMap.delete(socket.id);
+        idMap.delete(user);
+    })
 });

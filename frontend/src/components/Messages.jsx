@@ -3,7 +3,14 @@ import useAuthContext from "../hooks/useAuthContext";
 import { Fragment, useEffect, useRef } from "react";
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const isGreaterDate = (date1, date2) => date2.getFullYear() >= date1.getFullYear() && date2.getMonth() >= date1.getMonth() && date2.getDate() > date1.getDate();
+const isGreaterDate = (prev, curr) => {
+    if (curr.getFullYear() > prev.getFullYear()) return true;
+    if (curr.getFullYear() < prev.getFullYear()) return false;
+    if (curr.getMonth() > prev.getMonth()) return true;
+    if (curr.getMonth() < prev.getMonth()) return false;
+    if (curr.getDate() > prev.getDate()) return true;
+    return false;
+}
 
 function Content({ msg, mime }) {
     // console.log(mime);
@@ -20,9 +27,12 @@ function Content({ msg, mime }) {
             );
         case 'audio':
             return (
-                <audio controls>
-                    <source src={msg.body} />
-                </audio>
+                <div className="flex flex-col justify-center items-center">
+                    <div className="font-mono px-4 overflow-hidden">{msg.fileName}</div>
+                    <audio controls>
+                        <source src={msg.body} />
+                    </audio>
+                </div>
             );
         default:
             return (

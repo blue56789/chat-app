@@ -27,6 +27,11 @@ export default function Home() {
     }, [username]);
 
     useEffect(() => {
+        socket.emit('subscribe', users);
+        socket.emit('notifyOnline');
+    }, [users]);
+
+    useEffect(() => {
         const setOnline = (user) => {
             setOnlineUsers(o => {
                 // console.log('setonline', user);
@@ -50,13 +55,6 @@ export default function Home() {
     }, [setOnlineUsers]);
 
     useEffect(() => {
-        socket.emit('notifyOnline', username, users);
-        const notifyOffline = () => socket.emit('notifyOffline', username, users);
-        window.addEventListener('beforeunload', notifyOffline);
-        return () => window.removeEventListener('beforeunload', notifyOffline);
-    }, [convos, username, users]);
-
-    useEffect(() => {
         const newMsg = (msg, convo) => {
             dispatchConvos({ type: 'update', data: { id: convo._id, convo: convo } });
         };
@@ -77,7 +75,7 @@ export default function Home() {
     }, [dispatchConvos, chat]);
 
     const logout = () => {
-        socket.emit('notifyOffline', username, users);
+        socket.emit('notifyOffline');
         dispatch({ type: 'LOGOUT' });
     }
 
