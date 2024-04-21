@@ -14,9 +14,10 @@ export default function Chat({ convo, setContent }) {
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
     const { username, token } = useAuthContext();
-    const { dispatchConvos } = useConvoContext();
+    const { onlineUsers, dispatchConvos } = useConvoContext();
     const inputRef = useRef(null);
     const name = convo.isGroupChat ? convo.name : (convo.users[0] == username ? convo.users[1] : convo.users[0])
+    const online = onlineUsers.includes(name);
 
     const headers = {
         'Authorization': `Bearer ${token}`,
@@ -116,7 +117,10 @@ export default function Chat({ convo, setContent }) {
         <>
             <div className="flex justify-between items-center bg-bg-primary border-b border-border-primary p-4">
                 <button onClick={() => setContent('convos')} className="button-icon sm:hidden"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
-                <span className="title mx-4">{name}</span>
+                <div className="flex items-center">
+                    {!convo.isGroupChat && <span className={`sm:hidden size-2 rounded-full transition-all duration-500 ${online ? 'bg-green-500' : 'bg-bg-secondary'}`}></span>}
+                    <span className="title mx-4">{name}</span>
+                </div>
                 <span>
                     {convo.isGroupChat ? <>
                         <button onClick={() => setContent('groupInfo')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-info" /></button>
