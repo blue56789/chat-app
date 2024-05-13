@@ -25,7 +25,8 @@ export default function AddNew({ setContent }) {
         <>
             <div className="flex justify-between items-center p-4 bg-bg-primary border-b border-border-primary ">
                 <div>
-                    <button onClick={() => setContent('convos')} className="button-icon"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
+                    <button onClick={() => setContent('convos')} className="button-icon sm:hidden"><FontAwesomeIcon icon="fa-solid fa-chevron-left" /></button>
+                    <div className="size-0 sm:size-8"></div>
                 </div>
                 <div className="title">Add New</div>
                 <div className="size-8 sm:size-0"></div>

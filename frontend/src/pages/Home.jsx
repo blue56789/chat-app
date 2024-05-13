@@ -81,7 +81,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="flex h-full w-full overflow-hidden transition-all">
+            <div className="flex h-full w-full overflow-hidden transition-all backdrop-blur-[2px]">
                 <div className={`${content == 'convos' ? 'flex' : 'hidden'} bg-bg-primary sm:flex flex-col w-full sm:min-w-72 sm:max-w-[30%] sm:border-r sm:border-border-primary`}>
                     <div className="flex justify-between items-center p-4">
                         <span className="title">{username}</span>
